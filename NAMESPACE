@@ -1,0 +1,3 @@
+useDynLib(RadixSort, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
