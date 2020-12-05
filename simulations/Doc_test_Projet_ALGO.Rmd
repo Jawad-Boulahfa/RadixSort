@@ -1,0 +1,148 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(RadixSort)
+```
+
+```{r}
+V=floor(runif(1000,min=0,max=1000))
+```
+
+```{r}
+Radixsort(V)
+```
+
+```{r}
+radix_sort_Rcpp(V)
+```
+
+
+```{r}
+#devtools::install_github("vrunge/M2algorithmique")
+library(M2algorithmique)
+```
+
+```{r}
+one.simu <- function(n, type = "sample", func = "insertion_sort")
+{
+  if(type == "sample"){v <- sample(n)}else{v <- n:1}
+  if(func == "insertion_sort"){t <- system.time(insertion_sort(v))[[1]]}
+  if(func == "heap_sort"){t <- system.time(heap_sort(v))[[1]]} 
+  if(func == "insertion_sort_Rcpp"){t <- system.time(insertion_sort_Rcpp(v))[[1]]}
+  if(func == "heap_sort_Rcpp"){t <- system.time(heap_sort_Rcpp(v))[[1]]}
+  if(func == "Radixsort"){t <- system.time(Radixsort(v))[[1]]}
+  if(func == "radix_sort_Rcpp"){t <- system.time(radix_sort_Rcpp(v))[[1]]}
+  return(t)
+}
+```
+
+```{r}
+n <- 50000
+
+t3=one.simu(n, func = "insertion_sort_Rcpp")
+
+t4=one.simu(n, func = "heap_sort_Rcpp")
+
+t5=one.simu(n, func="Radixsort")
+
+t6=one.simu(n, func="radix_sort_Rcpp")
+```
+
+```{r}
+t5
+```
+
+```{r}
+t2/t4
+t5/t6
+t4/t6
+```
+
+
+
+```{r}
+library(microbenchmark)
+library(ggplot2)
+```
+
+
+```{r}
+n <- 50000
+res <- microbenchmark(one.simu(n, func = "Radixsort"),one.simu(n, func = "heap_sort_Rcpp"), one.simu(n, func = "radix_sort_Rcpp"), times = 50)
+autoplot(res)
+print(res)
+```
+
+```{r}
+n <- 1000000
+res <- microbenchmark(one.simu(n, func = "heap_sort_Rcpp"), one.simu(n, func = "radix_sort_Rcpp"), times = 50)
+autoplot(res)
+print(res)
+```
+
+
+```{r}
+nbSimus <- 20
+vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
+nbRep <- 100
+res_Radix <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_Radix) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_Radix[j,] <- c(i, replicate(nbRep, one.simu(i, func = "Radixsort")))  
+  #print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_Radix[,-1])
+plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
+```
+
+
+```{r}
+nbSimus <- 20
+vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
+nbRep <- 100
+res_Radix <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_Radix) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_Radix[j,] <- c(i, replicate(nbRep, one.simu(i, func = "heap_sort_Rcpp")))  
+  #print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_Radix[,-1])
+plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
+```
+
+
+```{r}
+nbSimus <- 20
+vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
+nbRep <- 100
+res_Radix <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_Radix) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_Radix[j,] <- c(i, replicate(nbRep, one.simu(i, func = "radix_sort_Rcpp")))  
+  #print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_Radix[,-1])
+plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
+```
+
+
+Plus le nombre d'éléments à stocker est grand, plus la différence entre le heap_sort et le radix_sort se fait grande.
