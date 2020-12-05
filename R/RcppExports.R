@@ -13,7 +13,3 @@ radix_sort_Rcpp <- function(V) {
     .Call(`_RadixSort_radix_sort_Rcpp`, V)
 }
 
-rcpp_hello_world <- function() {
-    .Call(`_RadixSort_rcpp_hello_world`)
-}
-
