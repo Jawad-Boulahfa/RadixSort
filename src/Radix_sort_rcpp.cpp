@@ -65,7 +65,7 @@ IntegerVector radix_sort_Rcpp(IntegerVector V){
   for(int i=1;i<=trunc(log10(elt_max)+1);i++){
     V=tri_digit_Rcpp_opti(V,i);
   }
-  return v;
+  return V;
 }
 
 

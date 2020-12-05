@@ -6,37 +6,37 @@
 using namespace Rcpp;
 
 // tri_digit_Rcpp
-IntegerVector tri_digit_Rcpp(IntegerVector v, int rank);
-RcppExport SEXP _RadixSort_tri_digit_Rcpp(SEXP vSEXP, SEXP rankSEXP) {
+IntegerVector tri_digit_Rcpp(IntegerVector V, int rank);
+RcppExport SEXP _RadixSort_tri_digit_Rcpp(SEXP VSEXP, SEXP rankSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
     Rcpp::traits::input_parameter< int >::type rank(rankSEXP);
-    rcpp_result_gen = Rcpp::wrap(tri_digit_Rcpp(v, rank));
+    rcpp_result_gen = Rcpp::wrap(tri_digit_Rcpp(V, rank));
     return rcpp_result_gen;
 END_RCPP
 }
 // tri_digit_Rcpp_opti
-IntegerVector tri_digit_Rcpp_opti(IntegerVector v, int rank);
-RcppExport SEXP _RadixSort_tri_digit_Rcpp_opti(SEXP vSEXP, SEXP rankSEXP) {
+IntegerVector tri_digit_Rcpp_opti(IntegerVector V, int rank);
+RcppExport SEXP _RadixSort_tri_digit_Rcpp_opti(SEXP VSEXP, SEXP rankSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
     Rcpp::traits::input_parameter< int >::type rank(rankSEXP);
-    rcpp_result_gen = Rcpp::wrap(tri_digit_Rcpp_opti(v, rank));
+    rcpp_result_gen = Rcpp::wrap(tri_digit_Rcpp_opti(V, rank));
     return rcpp_result_gen;
 END_RCPP
 }
 // radix_sort_Rcpp
-IntegerVector radix_sort_Rcpp(IntegerVector v);
-RcppExport SEXP _RadixSort_radix_sort_Rcpp(SEXP vSEXP) {
+IntegerVector radix_sort_Rcpp(IntegerVector V);
+RcppExport SEXP _RadixSort_radix_sort_Rcpp(SEXP VSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type v(vSEXP);
-    rcpp_result_gen = Rcpp::wrap(radix_sort_Rcpp(v));
+    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
+    rcpp_result_gen = Rcpp::wrap(radix_sort_Rcpp(V));
     return rcpp_result_gen;
 END_RCPP
 }
