@@ -3,9 +3,11 @@
 using namespace Rcpp;
 //using namespace std;
 
+
+
 // [[Rcpp::export]]
 IntegerVector tri_digit_Rcpp(IntegerVector V, int rank){
-  int n =V.length();
+  int n = V.length();
   IntegerVector V_mod (n);
   IntegerVector res (n);
   IntegerMatrix mat_stock (10,n);

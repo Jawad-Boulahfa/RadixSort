@@ -3,8 +3,13 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r}
+rm(list = ls())
+```
+
 
 ```{r}
+devtools::install_github("Jawad-Boulahfa/RadixSort")
 library(RadixSort)
 ```
 

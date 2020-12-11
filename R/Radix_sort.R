@@ -75,7 +75,10 @@ Radixsort <- function(V)
   #print(trunc(log(elt_max, base=10)+1))
   
   # Le "rank" dans la boucle, c'est la place du digit qu'on cherche à regarder
-  # Pour rank allant de 1 au nombre de digits maximum...
+  # Pour rank allant de 1 au nombre de digits maximum
+  # effectuer le tri selon le chiffre à la position rank (1 = unités, 2 = dizaines, etc.).
+  # Cette boucle permet de trier les éléments de V d'abord selon les unités,
+  # puis selon les dizaines et les unités, puis selon les centaines, les dizaines et les unités, etc.
   for (rank in (1: (trunc(log(elt_max, base=10))+1) ) )
   {
     V <- tri_digit_opti(V, rank)
