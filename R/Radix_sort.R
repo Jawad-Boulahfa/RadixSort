@@ -11,6 +11,7 @@ tri_digit <- function(V, rank)
   # Equivaut à 10 boites capable de stocker au maximum n valeurs.
   # On construit 10 boites pour les 10 chiffres possibles (0 à 9).
   # On stocke au maximum n valeurs si tout les nombres de la liste sont sur la même ligne de la matrice.
+  #
   mat_stock=matrix(nrow=10,ncol=n) 
   
   # vect_count = compte le nombre d'éléments dans chacune des 10 boîtes
