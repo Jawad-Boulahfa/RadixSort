@@ -1,7 +1,7 @@
 tri_digit <- function(V, rank)
 {
   # n = taille du vecteur V (nombre d'éléments à trier)
-  n = length(V)
+  n <- length(V)
   
   # V_mod = Vecteur qui contient à un indice j
   # le reste de la division euclidienne de la partie entière de V[j]/10^(rank-1) par 10.
@@ -12,7 +12,7 @@ tri_digit <- function(V, rank)
   # On construit 10 boites pour les 10 chiffres possibles (0 à 9).
   # On stocke au maximum n valeurs si tout les nombres de la liste sont sur la même ligne de la matrice.
   #
-  mat_stock=matrix(nrow=10,ncol=n) 
+  mat_stock <- matrix(nrow = 10, ncol = n) 
   
   # vect_count = compte le nombre d'éléments dans chacune des 10 boîtes
   # on initialise donc tout ses éléments à 0
@@ -46,19 +46,19 @@ tri_digit <- function(V, rank)
 
 
 tri_digit_opti <- function(V,rank){
-  n=length(V)
-  vect_count=rep(0,10)
-  res=rep(0,n)
-  tamp=10^(rank-1)
-  V_idx=floor(V/tamp)%%10+1 # les modulos de chaque élt de v +1, pour éviter de les recalculer à chaque fois. On évite n calculs
+  n <- length(V)
+  vect_count <- rep(0,10)
+  res <- rep(0,n)
+  tamp <- 10^(rank-1)
+  V_idx <- floor(V/tamp)%%10+1 # les modulos de chaque élt de v +1, pour éviter de les recalculer à chaque fois. On évite n calculs
   #donc gain de temps de calcul, pour un vecteur de taille N en + à stocker.
   # Il y a un +1 dans le tableau car l'indicage commence à 1 en R.
   
   for (i in 1:n){ 
     #idx=floor(V[i]/tamp)%%10+1  
-    vect_count[V_idx[i]]=vect_count[V_idx[i]]+1
+    vect_count[V_idx[i]] <- vect_count[V_idx[i]]+1
   }
-  tamp2=cumsum(vect_count)
+  tamp2 <- cumsum(vect_count)
   
   for (i in n:1){
     #idx=floor(V[i]/tamp)%%10 + 1;
@@ -69,7 +69,7 @@ tri_digit_opti <- function(V,rank){
   return(res)
 }
 
-Radixsort <- function(V)
+radix_sort <- function(V)
 {
   elt_max <- max(V) # élément maximum de la liste
   #print(elt_max)
