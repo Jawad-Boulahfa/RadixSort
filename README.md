@@ -1,2 +1,2 @@
-# radix_sort
+# RadixSort
 Projet M2 Algorithmique
