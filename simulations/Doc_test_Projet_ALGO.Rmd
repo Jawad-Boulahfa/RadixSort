@@ -8,12 +8,12 @@ rm(list = ls())
 ```
 
 ```{r}
-devtools::install_github("Jawad-Boulahfa/RadixSort")
+#devtools::install_github("Jawad-Boulahfa/RadixSort")
 library(RadixSort)
 ```
 
 ```{r}
-V=floor(runif(1000,min=0,max=1000))
+V <- floor(runif(1000,min=0,max=1000))
 ```
 
 ```{r}
@@ -26,7 +26,7 @@ radix_sort_Rcpp(V)
 
 
 ```{r}
-#devtools::install_github("vrunge/M2algorithmique")
+devtools::install_github("vrunge/M2algorithmique")
 library(M2algorithmique)
 ```
 
@@ -47,13 +47,17 @@ one.simu <- function(n, type = "sample", func = "insertion_sort")
 ```{r}
 n <- 50000
 
-t3=one.simu(n, func = "insertion_sort_Rcpp")
+t1 <- one.simu(n, func = "insertion_sort")
 
-t4=one.simu(n, func = "heap_sort_Rcpp")
+t2 <- one.simu(n, func = "heap_sort")
 
-t5=one.simu(n, func="radix_sort")
+t3 <- one.simu(n, func = "insertion_sort_Rcpp")
 
-t6=one.simu(n, func="radix_sort_Rcpp")
+t4 <- one.simu(n, func = "heap_sort_Rcpp")
+
+t5 <- one.simu(n, func="radix_sort")
+
+t6 <- one.simu(n, func="radix_sort_Rcpp")
 ```
 
 ```{r}
@@ -61,6 +65,7 @@ t5
 ```
 
 ```{r}
+t1/t3
 t2/t4
 t5/t6
 t4/t6
