@@ -64,7 +64,7 @@ Vecteur à trier.
 v
 ```
 
-    ##  [1]  8  2  8  3  9 10 10  2  4  8
+    ##  [1]  9  7 10  4  6  4  7  4  1 10
 
 Radix sort avec la fonction codée en R.
 
@@ -72,7 +72,7 @@ Radix sort avec la fonction codée en R.
 radix_sort(v)
 ```
 
-    ##  [1]  2  2  3  4  8  8  8  9 10 10
+    ##  [1]  1  4  4  4  6  7  7  9 10 10
 
 Radix sort avec la fonction codée en Rcpp.
 
@@ -80,7 +80,7 @@ Radix sort avec la fonction codée en Rcpp.
 radix_sort_Rcpp(v)
 ```
 
-    ##  [1]  2  2  3  4  8  8  8  9 10 10
+    ##  [1]  1  4  4  4  6  7  7  9 10 10
 
 <a id="n"></a>
 
@@ -153,13 +153,13 @@ On fait un premier essai de simulation pour chacun des algorithmes avec
 one.simu(n = n, func = "radix_sort")
 ```
 
-    ## [1] 0.2
+    ## [1] 0.145
 
 ``` r
 one.simu(n = n, func = "radix_sort_Rcpp")
 ```
 
-    ## [1] 0.01
+    ## [1] 0.005
 
 ``` r
 # 35 secondes avec n = 10^5 : trop lent
@@ -170,7 +170,7 @@ one.simu(n = n, func = "radix_sort_Rcpp")
 one.simu(n = n, func = "heap_sort_Rcpp")
 ```
 
-    ## [1] 0.03
+    ## [1] 0.026
 
 ``` r
 # Trop lent sur de grosses données
@@ -218,20 +218,20 @@ On affiche les temps d’exécution pour effectuer 10 simulations.
 t1 # temps d'exécution du radix sort en R
 ```
 
-    ## [1] 21.63
+    ## [1] 19.442
 
 ``` r
 t2 # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0.67
+    ## [1] 0.511
 
 ``` r
 # t3 # temps d'exécution du heap sort en R
 t4 # temps d'exécution du heap sort en Rcpp
 ```
 
-    ## [1] 2.58
+    ## [1] 2.26
 
 Comparaison des temps d’exécution.
 
@@ -239,7 +239,7 @@ Comparaison des temps d’exécution.
 t1/t2 # radix sort gain R -> Rcpp
 ```
 
-    ## [1] 32.28358
+    ## [1] 38.04697
 
 ``` r
 # t3/t4 # heap sort gain R -> Rcpp
@@ -248,7 +248,7 @@ t1/t2 # radix sort gain R -> Rcpp
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] 0.2596899
+    ## [1] 0.2261062
 
 ### Simulations dans le “cas logarithmique”
 
@@ -292,13 +292,13 @@ On affiche les temps d’exécution pour effectuer 10 simulations.
 t1_log # temps d'exécution du radix sort en R
 ```
 
-    ## [1] 0
+    ## [1] 0.001
 
 ``` r
 t2_log # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0
+    ## [1] 0.002
 
 ``` r
 #t3_log # temps d'exécution du heap sort en R
@@ -313,7 +313,7 @@ Comparaison des temps d’exécution.
 t1_log/t2_log # radix sort gain R -> Rcpp
 ```
 
-    ## [1] NaN
+    ## [1] 0.5
 
 ``` r
 #t3_log/t4_log # heap sort gain R -> Rcpp
@@ -322,7 +322,7 @@ t1_log/t2_log # radix sort gain R -> Rcpp
 t2_log/t4_log # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] NaN
+    ## [1] Inf
 
 ### Simulations dans le “pire des cas”
 
@@ -360,20 +360,20 @@ On affiche les temps d’exécution pour effectuer 10 simulations.
 t1_worst # temps d'exécution du radix sort en R
 ```
 
-    ## [1] 22.95
+    ## [1] 18.839
 
 ``` r
 t2_worst # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0.65
+    ## [1] 0.527
 
 ``` r
 #t3_worst # temps d'exécution du heap sort en R
 t4_worst # temps d'exécution du heap sort en Rcpp
 ```
 
-    ## [1] 1.47
+    ## [1] 1.368
 
 Comparaison des temps d’exécution.
 
@@ -381,7 +381,7 @@ Comparaison des temps d’exécution.
 t1_worst/t2_worst # radix sort gain R -> Rcpp
 ```
 
-    ## [1] 35.30769
+    ## [1] 35.74763
 
 ``` r
 # t3_worst/t4_worst # heap sort gain R -> Rcpp
@@ -390,7 +390,7 @@ t1_worst/t2_worst # radix sort gain R -> Rcpp
 t2_worst/t4_worst # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] 0.4421769
+    ## [1] 0.3852339
 
 <a id="micro"></a>
 
@@ -426,14 +426,14 @@ print(res)
 ```
 
     ## Unit: milliseconds
-    ##                                       expr     min      lq     mean  median
-    ##       one.simu(n = n, func = "radix_sort") 59.1814 69.6032 74.18380 72.0584
-    ##  one.simu(n = n, func = "radix_sort_Rcpp") 46.1011 51.1993 54.46950 52.9978
-    ##   one.simu(n = n, func = "heap_sort_Rcpp") 47.8520 51.9701 54.70478 54.4681
-    ##       uq      max neval cld
-    ##  76.7428 107.1201    50   b
-    ##  56.2709  80.6915    50  a 
-    ##  55.8226  74.5566    50  a
+    ##                                       expr      min       lq     mean   median
+    ##       one.simu(n = n, func = "radix_sort") 52.48329 57.39187 59.40552 59.55628
+    ##  one.simu(n = n, func = "radix_sort_Rcpp") 38.55722 40.92623 42.98569 42.51627
+    ##   one.simu(n = n, func = "heap_sort_Rcpp") 39.70947 41.65465 43.07509 42.82792
+    ##        uq      max neval
+    ##  60.98617 68.88502    50
+    ##  44.09908 57.53628    50
+    ##  44.45939 48.01773    50
 
 ### Comparaison entre le radix sort en Rcpp et le heap sort en Rcpp (“cas moyen”)
 
@@ -458,12 +458,12 @@ print(res)
 ```
 
     ## Unit: milliseconds
-    ##                                       expr      min       lq     mean   median
-    ##  one.simu(n = n, func = "radix_sort_Rcpp") 232.9665 244.2854 258.8633 255.8933
-    ##   one.simu(n = n, func = "heap_sort_Rcpp") 399.1887 419.5414 437.7275 427.4889
-    ##        uq      max neval cld
-    ##  265.7988 433.2756    50  a 
-    ##  446.8945 524.6888    50   b
+    ##                                       expr       min       lq     mean   median
+    ##  one.simu(n = n, func = "radix_sort_Rcpp")  94.66423 109.3194 114.0439 112.2889
+    ##   one.simu(n = n, func = "heap_sort_Rcpp") 238.46563 249.4284 271.8918 271.6391
+    ##        uq      max neval
+    ##  120.1313 163.5682    50
+    ##  281.0105 330.0410    50
 
 ### Comparaison entre le radix sort en R, le radix sort en Rcpp et le heap sort en Rcpp (“cas logarithmique”)
 
@@ -492,13 +492,13 @@ print(res)
 
     ## Unit: milliseconds
     ##                                                     expr      min       lq
-    ##       one.simu(n = n, type = "log", func = "radix_sort") 122.2408 129.5479
-    ##  one.simu(n = n, type = "log", func = "radix_sort_Rcpp") 113.1567 127.7129
-    ##   one.simu(n = n, type = "log", func = "heap_sort_Rcpp") 118.9494 130.4953
-    ##      mean   median       uq      max neval cld
-    ##  131.7092 131.0644 133.8740 153.7211    50   a
-    ##  131.3793 132.1361 133.7867 157.3275    50   a
-    ##  133.3598 132.8634 135.3967 150.6863    50   a
+    ##       one.simu(n = n, type = "log", func = "radix_sort") 44.41595 45.61041
+    ##  one.simu(n = n, type = "log", func = "radix_sort_Rcpp") 44.08083 45.63437
+    ##   one.simu(n = n, type = "log", func = "heap_sort_Rcpp") 43.81823 45.28821
+    ##      mean   median       uq      max neval
+    ##  47.03937 46.38767 47.76779 56.38350    50
+    ##  46.65819 46.39673 47.12245 52.94447    50
+    ##  46.50323 46.12918 47.18257 53.25261    50
 
 ### Comparaison entre le radix sort en Rcpp et le heap sort en Rcpp (“cas logarithmique”)
 
@@ -525,11 +525,11 @@ print(res)
 
     ## Unit: milliseconds
     ##                                                     expr      min       lq
-    ##  one.simu(n = n, type = "log", func = "radix_sort_Rcpp") 118.7448 131.1462
-    ##   one.simu(n = n, type = "log", func = "heap_sort_Rcpp") 118.9695 130.4936
-    ##      mean   median       uq      max neval cld
-    ##  131.8855 132.5364 134.1874 136.1378    50   a
-    ##  131.7780 132.5536 134.0897 137.5516    50   a
+    ##  one.simu(n = n, type = "log", func = "radix_sort_Rcpp") 44.11373 45.08553
+    ##   one.simu(n = n, type = "log", func = "heap_sort_Rcpp") 44.22827 44.97427
+    ##      mean   median       uq      max neval
+    ##  46.84968 45.75970 48.06489 54.62435    50
+    ##  46.56185 45.68711 48.02937 52.23691    50
 
 ### Comparaison entre le radix sort en R, le radix sort en Rcpp et le heap sort en Rcpp (“pire des cas”)
 
@@ -559,13 +559,13 @@ print(res)
 
     ## Unit: milliseconds
     ##                                                  expr      min       lq
-    ##       one.simu(n = n, type = "", func = "radix_sort") 139.2236 148.4812
-    ##  one.simu(n = n, type = "", func = "radix_sort_Rcpp") 113.6036 127.3328
-    ##   one.simu(n = n, type = "", func = "heap_sort_Rcpp") 117.0321 126.3610
-    ##      mean   median       uq      max neval cld
-    ##  152.3046 153.2015 155.1576 169.5414    50   b
-    ##  129.6050 130.0242 133.6055 135.7104    50  a 
-    ##  129.9708 131.0446 133.5983 148.1290    50  a
+    ##       one.simu(n = n, type = "", func = "radix_sort") 60.93721 67.04512
+    ##  one.simu(n = n, type = "", func = "radix_sort_Rcpp") 44.89340 49.56351
+    ##   one.simu(n = n, type = "", func = "heap_sort_Rcpp") 44.64093 48.26755
+    ##      mean   median       uq       max neval
+    ##  74.84446 71.22342 78.07024 103.31808    50
+    ##  56.31830 54.59360 61.63129  78.49405    50
+    ##  55.00354 52.83927 61.03903  77.59797    50
 
 ### Comparaison entre le radix sort en Rcpp et le heap sort en Rcpp (“pire des cas”)
 
@@ -591,12 +591,12 @@ print(res)
 ```
 
     ## Unit: milliseconds
-    ##                                                  expr      min       lq
-    ##  one.simu(n = n, type = "", func = "radix_sort_Rcpp") 184.7037 194.5126
-    ##   one.simu(n = n, type = "", func = "heap_sort_Rcpp") 263.4141 272.1390
-    ##      mean   median       uq      max neval cld
-    ##  201.5850 201.5958 207.3980 217.9321    50  a 
-    ##  279.5816 275.2708 283.0202 420.6784    50   b
+    ##                                                  expr       min       lq
+    ##  one.simu(n = n, type = "", func = "radix_sort_Rcpp")  97.50581 102.2702
+    ##   one.simu(n = n, type = "", func = "heap_sort_Rcpp") 173.90354 181.7978
+    ##      mean   median       uq      max neval
+    ##  108.8439 104.8287 110.1807 157.0846    50
+    ##  194.1268 188.1509 200.7221 253.0906    50
 
 <a id="complexity"></a>
 
@@ -642,7 +642,7 @@ lm(res ~ vector_n)
     ## 
     ## Coefficients:
     ## (Intercept)     vector_n  
-    ##   3.447e-03    1.777e-06
+    ##   2.881e-03    1.492e-06
 
 ### Radix sort en Rcpp
 
