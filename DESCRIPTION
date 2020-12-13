@@ -3,10 +3,7 @@ Type: Package
 Title: Radix sort algorithm in R and Rcpp
 Version: 1.0
 Date: 2020-11-27
-Authors@R: c(
-	person("Jawad", "Boulahfa", email = "20144668@etud.univ-evry.fr"),
-	person("Kylliann", "De Santiago"),
-	person("Romain", "Brulé"))
+Authors: Jawad Boulahfa, Kyllian de Santiago, Romain Brulé
 Maintainer: Jawad Boulahfa <20144668@etud.univ-evry.fr>
 Description: A package to compare the performances of the radix sort algorithm using R and Rcpp.
 License: GPL (>= 2)
