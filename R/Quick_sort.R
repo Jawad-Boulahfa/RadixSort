@@ -87,7 +87,7 @@ quick_sort <- function(V)
     # On trie les éléments à droite du pivot
     V_right <- quick_sort(V[pivot_index+1:length(V)])
     
-    res <- c(V_left, pivot, V_right)
+    res <- c(V_left, V[pivot_index], V_right)
     
     return(res)
   }
