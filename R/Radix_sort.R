@@ -76,7 +76,7 @@ tri_digit_opti <- function(V,rank){
   vect_count <- rep(0,10)
   res <- rep(0,n)
   tamp <- 10^(rank-1)
-  V_idx <- floor(V/tamp)%%10+1 # les modulos de chaque élt de v +1, pour éviter de les recalculer à chaque fois. On évite n calculs
+  V_idx <- trunc(V/tamp)%%10+1 # les modulos de chaque élt de v +1, pour éviter de les recalculer à chaque fois. On évite n calculs
   #donc gain de temps de calcul, pour un vecteur de taille N en + à stocker.
   # Il y a un +1 dans le tableau car l'indicage commence à 1 en R.
   
@@ -139,33 +139,57 @@ radix_sort <- function(V){
 }
 
 
-
+### A COMMENTER ###
 
 radix_sort_decimal <- function(V){
   
   V_neg=-V[sign(V)==-1]
   if(length(V_neg)>1){
-    nb_decimal=-max(sapply(V_neg,FUN=nb_digit))+1 #le nb de digit après la virgule+1(décalage)
+    nb_decimal=-min(max(sapply(V_neg,FUN=nb_decim)),16) #le nb de digit après la virgule
     elt_max=max(V_neg)
-    for (rank in (nb_decimal: (trunc(log(elt_max, base=10))+1) ) ){
-      V_neg=tri_digit_opti(V_neg,rank)
+    for (rank in ( (nb_decimal+1) : (trunc(log(elt_max, base=10))+1) ) ){
+      V_neg=tri_digit_opti_decimal(V_neg,rank)
     }
   }
   
   
   V_pos= V[sign(V)!=-1]
   if(length(V_pos)>1){
-    nb_decimal=max(sapply(V_pos,FUN=nb_digit))
+    nb_decimal=-min(max(sapply(V_pos,FUN=nb_decim),16))
     elt_max=max(V_pos)
-    for (rank in (nb_decimal: (trunc(log(elt_max, base=10))+1) ) ){
-      V_pos=tri_digit_opti(V_pos,rank)
+    for (rank in ( (nb_decimal+1) : (trunc(log(elt_max, base=10))+1) ) ){
+      V_pos=tri_digit_opti_decimal(V_pos,rank)
     }
   }
   return( c(-rev(V_neg),V_pos) )
   
 }
 
+tri_digit_opti_decimal <- function(V,rank){
+  n <- length(V)
+  vect_count <- rep(0,10)
+  res <- rep(0,n)
+  tamp <- 10^(rank-1)
+  #if(rank>0){res <- trunc(V)/tamp ; V_idx <- trunc(res)%%10+1}
+  #if(rank<=0){ res <- abs(V - trunc(V))/tamp ; V_idx <- trunc(res)%%10+1}
+  
+  if(rank>0){ V_idx <- trunc(trunc(V)/tamp)%%10+1}
+  else{V_idx <- trunc( (V - trunc(V))/tamp)%%10+1}
+  
+  for (i in 1:n){ 
+    vect_count[V_idx[i]] <- vect_count[V_idx[i]]+1
+  }
+  tamp2 <- cumsum(vect_count)
+  
+  for (i in n:1){
+    res[tamp2[V_idx[i]]] <- V[i];
+    tamp2[V_idx[i]] <- tamp2[V_idx[i]]-1;
+  }
+  
+  return(res)
+}
 
-nb_digit<-function(nb){
+nb_decim<-function(nb){
   return(match(TRUE, round(nb, 1:20) == nb))
 }
+
