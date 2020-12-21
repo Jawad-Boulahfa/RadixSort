@@ -95,38 +95,80 @@ tri_digit_opti <- function(V,rank){
   return(res)
 }
 
-radix_sort <- function(V)
-{
-  elt_max <- max(V) # élément maximum de la liste
-  #print(elt_max)
-  #print(trunc(log(elt_max, base=10)+1))
-  
-  # Le "rank" dans la boucle, c'est la place du digit qu'on cherche à regarder
-  # Pour rank allant de 1 au nombre de digits maximum
-  # effectuer le tri selon le chiffre à la position rank (1 = unités, 2 = dizaines, etc.).
-  # Cette boucle permet de trier les éléments de V d'abord selon les unités,
-  # puis selon les dizaines et les unités, puis selon les centaines, les dizaines et les unités, etc.
-  for (rank in (1: (trunc(log(elt_max, base=10))+1) ) )
-  {
-    V <- tri_digit_opti(V, rank)
-  }
-  return(V)
-}
+# radix_sort <- function(V)
+# {
+#   elt_max <- max(V) # élément maximum de la liste
+#   #print(elt_max)
+#   #print(trunc(log(elt_max, base=10)+1))
+#   
+#   # Le "rank" dans la boucle, c'est la place du digit qu'on cherche à regarder
+#   # Pour rank allant de 1 au nombre de digits maximum
+#   # effectuer le tri selon le chiffre à la position rank (1 = unités, 2 = dizaines, etc.).
+#   # Cette boucle permet de trier les éléments de V d'abord selon les unités,
+#   # puis selon les dizaines et les unités, puis selon les centaines, les dizaines et les unités, etc.
+#   for (rank in (1: (trunc(log(elt_max, base=10))+1) ) )
+#   {
+#     V <- tri_digit_opti(V, rank)
+#   }
+#   return(V)
+# }
 
 ### A COMMENTER ###
-radix_sort_decim_modulo <- function(V){
-  N=length(V)
-  nb_decimal=0
-  for (i in 1:length(V)) {
-    res=match(TRUE, round(V[i], 1:20) == V[i])
-    if(nb_decimal<res) {nb_decimal=res}
+
+
+radix_sort <- function(V){
+  
+  V_neg=-V[sign(V)==-1]
+  
+  if(length(V_neg)>1){
+    elt_max=max(V_neg)
+    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
+      V_neg=tri_digit_opti(V_neg,rank)
+    }
   }
-  #print(nb_decimal)
-  digit_elt_max=trunc(log(max(abs(V))),base=10)+1 
-  #print(trunc(log(mx, base=10)+1))
-  for (i in (-nb_decimal+1): digit_elt_max){
-    V=tri_digit_opti(V,i)
-    #print(length(V))
+  
+  V_pos= V[sign(V)!=-1]
+  
+  if(length(V_pos)>1){
+    elt_max=max(V_pos)
+    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
+      V_pos=tri_digit_opti(V_pos,rank)
+    }
   }
-  return(V)
+  return( c(-rev(V_neg),V_pos) )
+}
+
+
+
+
+radix_sort_decimal <- function(V){
+  
+  V_neg=-V[sign(V)==-1]
+  if(length(V_neg)>1){
+    nb_decimal=0
+    for (i in 1:length(V_neg)) {
+      res=match(TRUE, round(V_neg[i], 1:20) == V_neg[i])
+      if(nb_decimal<res) {nb_decimal=res}
+    }
+    elt_max=max(V_neg)
+    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
+      V_neg=tri_digit_opti(V_neg,rank)
+    }
+  }
+  
+  
+  V_pos= V[sign(V)!=-1]
+  if(length(V_pos)>1){
+    nb_decimal=0
+    for (i in 1:length(V_pos)) {
+      res=match(TRUE, round(V_pos[i], 1:20) == V_pos[i])
+      if(nb_decimal<res) {nb_decimal=res}
+    }
+    elt_max=max(V_pos)
+    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
+      V_pos=tri_digit_opti(V_pos,rank)
+    }
+  }
+  return( c(-rev(V_neg),V_pos) )
+  
 }
