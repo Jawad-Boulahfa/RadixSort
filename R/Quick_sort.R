@@ -75,10 +75,11 @@ quick_sort <- function(V)
     # Le pivot correspond alors à V[pivot_index]
     pivot_index <- sample(length(V), 1)
     
-    # On sélectionne un élément comme pivot, et on le place au bon endroit du tableau
-    partition <- create_hoare_partition(V = V, pivot_index = sample(length(V), 1))
+    # Avec create_hoare_partition, on sélectionne un élément comme pivot,
+    # et on le place au bon endroit du tableau
+    partition <- create_hoare_partition(V = V, pivot_index = pivot_index)
+    
     V <- partition$new_V
-
     pivot_index <- partition$new_pivot_index
     
     # On trie les éléments à gauche du pivot
