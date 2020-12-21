@@ -145,13 +145,9 @@ radix_sort_decimal <- function(V){
   
   V_neg=-V[sign(V)==-1]
   if(length(V_neg)>1){
-    nb_decimal=0
-    for (i in 1:length(V_neg)) {
-      res=match(TRUE, round(V_neg[i], 1:20) == V_neg[i])
-      if(nb_decimal<res) {nb_decimal=res}
-    }
+    nb_decimal=-max(sapply(V_neg,FUN=nb_digit))+1 #le nb de digit après la virgule+1(décalage)
     elt_max=max(V_neg)
-    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
+    for (rank in (nb_decimal: (trunc(log(elt_max, base=10))+1) ) ){
       V_neg=tri_digit_opti(V_neg,rank)
     }
   }
@@ -159,16 +155,17 @@ radix_sort_decimal <- function(V){
   
   V_pos= V[sign(V)!=-1]
   if(length(V_pos)>1){
-    nb_decimal=0
-    for (i in 1:length(V_pos)) {
-      res=match(TRUE, round(V_pos[i], 1:20) == V_pos[i])
-      if(nb_decimal<res) {nb_decimal=res}
-    }
+    nb_decimal=max(sapply(V_pos,FUN=nb_digit))
     elt_max=max(V_pos)
-    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
+    for (rank in (nb_decimal: (trunc(log(elt_max, base=10))+1) ) ){
       V_pos=tri_digit_opti(V_pos,rank)
     }
   }
   return( c(-rev(V_neg),V_pos) )
   
+}
+
+
+nb_digit<-function(nb){
+  return(match(TRUE, round(nb, 1:20) == nb))
 }
