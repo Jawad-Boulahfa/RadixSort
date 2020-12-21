@@ -112,3 +112,21 @@ radix_sort <- function(V)
   }
   return(V)
 }
+
+
+radix_sort_decim_modulo <- function(V){
+  N=length(V)
+  nb_decimal=0
+  for (i in 1:length(V)) {
+    res=match(TRUE, round(V[i], 1:20) == V[i])
+    if(nb_decimal<res) {nb_decimal=res}
+  }
+  #print(nb_decimal)
+  digit_elt_max=trunc(log(max(abs(V))),base=10)+1 
+  #print(trunc(log(mx, base=10)+1))
+  for (i in (-nb_decimal+1): digit_elt_max){
+    V=tri_digit_opti(V,i)
+    #print(length(V))
+  }
+  return(V)
+}
