@@ -65,10 +65,9 @@ create_hoare_partition <- function(V, pivot_index)
 
         return(list(new_pivot_index = j, new_V = V_res))
       }
-      
     }
-
   }
+  return(list(new_pivot_index = j, new_V = V_res))
 }
 
 
