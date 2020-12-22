@@ -19,7 +19,7 @@ create_hoare_partition <- function(V, pivot_index)
   
   # On répète la procédure tant qu'on a pas placé tout les éléments strictement inférieurs au pivot
   # à sa gauche et les éléments strictement supérieurs au pivot à sa droite
-  while(i <= j)
+  while(i < j)
   {
     # Si un élément est supérieur ou égal au pivot on s'arrête
     # Si i est plus grand que j on s'arrête aussi car on est pas au bon endroit
@@ -71,24 +71,19 @@ create_hoare_partition <- function(V, pivot_index)
 }
 
 
-
-
-
 quick_sort <- function(V)
 {
-  V_tmp <- V
-  
-  if(length(V_tmp) > 1)
+  if(length(V) > 1)
   {
     # Choix du pivot (choisi aléatoirement parmi les éléments du vecteur à trier)
     # sample(length(V), 1) renvoie un indice compris entre 1 et length(V)
-    pivot_index <- sample(length(V_tmp), 1)
+    pivot_index <- sample(length(V), 1)
     # Le pivot correspond alors à V[pivot_index], on le stocke pour l'utiliser à la fin
-    pivot <- V_tmp[pivot_index]
+    pivot <- V[pivot_index]
     
     # Avec create_hoare_partition, on sélectionne un élément comme pivot,
     # et on le place au bon endroit du tableau
-    partition <- create_hoare_partition(V = V_tmp, pivot_index = pivot_index)
+    partition <- create_hoare_partition(V = V, pivot_index = pivot_index)
     
     V_partition <- partition$new_V
     pivot_index <- partition$new_pivot_index
@@ -99,13 +94,50 @@ quick_sort <- function(V)
     # On trie les éléments à droite du pivot
     V_right <- quick_sort(V_partition[pivot_index+1:length(V_partition)])
     
-    # On rassemble les résultats
     res <- c(V_left, pivot, V_right)
-    
     return(res)
   }
   else
   {
-    return(V_tmp)
+    return(V)
   }
 }
+
+
+
+
+#quick_sort <- function(V)
+#{
+#  V_tmp <- V
+#  
+#  if(length(V_tmp) > 1)
+#  {
+#    # Choix du pivot (choisi aléatoirement parmi les éléments du vecteur à trier)
+#    # sample(length(V), 1) renvoie un indice compris entre 1 et length(V)
+#    pivot_index <- sample(length(V_tmp), 1)
+#    # Le pivot correspond alors à V[pivot_index], on le stocke pour l'utiliser à la fin
+#    pivot <- V_tmp[pivot_index]
+#    
+#    # Avec create_hoare_partition, on sélectionne un élément comme pivot,
+#    # et on le place au bon endroit du tableau
+#    partition <- create_hoare_partition(V = V_tmp, pivot_index = pivot_index)
+#    
+#    V_partition <- partition$new_V
+#    pivot_index <- partition$new_pivot_index
+#    
+#    # On trie les éléments à gauche du pivot
+#    V_left <- quick_sort(V_partition[1:pivot_index-1])
+#    
+#    # On trie les éléments à droite du pivot
+#    V_right <- quick_sort(V_partition[pivot_index+1:length(V_partition)])
+#    
+#    # On rassemble les résultats
+#    res <- c(V_left, pivot, V_right)
+#    
+#    return(res)
+#  }
+#  else
+#  {
+#    return(V_tmp)
+#  }
+#}
