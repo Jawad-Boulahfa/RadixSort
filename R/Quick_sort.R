@@ -51,7 +51,7 @@ create_hoare_partition <- function(V, pivot_index)
       
     }
     
-    if(i <= j)
+    if(i < j)
     {
       # Si i < j, on échange V[i] et V[j] puis on recommence la procédure
       # Il faut les échanger car si on s'est arrêté avant "le milieu" pour i ou pour j
