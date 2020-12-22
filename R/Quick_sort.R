@@ -13,16 +13,18 @@ create_hoare_partition <- function(V, pivot_index)
   #V_res[pivot_index] <- tmp
   
   # i concerne la partie gauche du vecteur (à gauche du pivot)
-  i <- 0
+  i <- 1
   # j concerne la partie droite du vecteur (à droite du pivot)
-  j <- length(V_res) + 1
+  j <- length(V_res)
   
   # On répète la procédure tant qu'on a pas placé tout les éléments strictement inférieurs au pivot
   # à sa gauche et les éléments strictement supérieurs au pivot à sa droite
   while(TRUE)
   {
-    
-    while(TRUE)
+    # Si un élément est supérieur ou égal au pivot on s'arrête
+    # Si i est plus grand que j on s'arrête aussi car on est pas au bon endroit
+    # (on n'est plus dans la partie gauche du vecteur)
+    while(V_res[i] < V_res[pivot_index] & i <= j)
     {
       # Tant que les éléments qu'on regarde en partant du début du vecteur
       # sont plus petits que le pivot, on incrémente l'indice
@@ -30,20 +32,15 @@ create_hoare_partition <- function(V, pivot_index)
       # le if sert à ne pas dépasser la taille du vecteur
       if(i < length(V_res))
         i <- i + 1
-    
-      
-      # Si un élément est supérieur ou égal au pivot on s'arrête
-      # Si i est plus grand que j on s'arrête aussi car on est pas au bon endroit
-      # (on n'est plus dans la partie gauche du vecteur)
-      if(V_res[i] >= V_res[pivot_index] | i > j)
-      {
-        break
-      }
+
     }
     # Tant que les éléments qu'on regarde en partant de la fin du vecteur
     # sont plus grands que le pivot, on décrémente l'indice
     # qui permet de compter les éléments à droite
-    while(TRUE)
+    # Si un élément est plus petit que le pivot, on s'arrête
+    # Si j est plus petit que i on s'arrête aussi car on est pas au bon endroit
+    # (on n'est plus dans la partie droite du vecteur)
+    while(V_res[j] > V_res[pivot_index] & j >= i)
     {
       # le if sert à ne pas être en dessous du premier élément du vecteur
       # si j = 0, le if qui suit ne marche pas car la première comparaison renvoie un NULL
@@ -51,13 +48,6 @@ create_hoare_partition <- function(V, pivot_index)
       if(j > 1)
         j <- j - 1
       
-      # Si un élément est plus petit que le pivot, on s'arrête
-      # Si j est plus petit que i on s'arrête aussi car on est pas au bon endroit
-      # (on n'est plus dans la partie droite du vecteur)
-      if(V_res[j] <= V_res[pivot_index] | j < i)
-      {
-        break
-      }
       if(i < j)
       {
         # Si i < j, on échange V[i] et V[j] puis on recommence la procédure
@@ -75,7 +65,6 @@ create_hoare_partition <- function(V, pivot_index)
 
         return(list(new_pivot_index = j, new_V = V_res))
       }
-      
       
     }
 
