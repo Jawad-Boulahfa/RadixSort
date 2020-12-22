@@ -8,11 +8,13 @@ create_hoare_partition <- function(V, pivot_index)
   V_res <- V
   
   # On commence par échanger le pivot avec le premier élément du vecteur à trier
-  tmp <- V_res[1]
-  V_res[1] <- V_res[pivot_index]
-  V_res[pivot_index] <- tmp
+  #tmp <- V_res[1]
+  #V_res[1] <- V_res[pivot_index]
+  #V_res[pivot_index] <- tmp
   
+  # i concerne la partie gauche du vecteur (à gauche du pivot)
   i <- 0
+  # j concerne la partie droite du vecteur (à droite du pivot)
   j <- length(V_res) + 1
   
   # On répète la procédure tant qu'on a pas placé tout les éléments strictement inférieurs au pivot
@@ -60,7 +62,8 @@ create_hoare_partition <- function(V, pivot_index)
       else
       {
         # Sinon on renvoie j (ou i car i = j, i.e. on est "au milieu"
-        # i et j pointent sur un élément égal au pivot 
+        # i et j pointent sur un élément égal au pivot
+
         return(list(new_pivot_index = j, new_V = V_res))
       }
       
