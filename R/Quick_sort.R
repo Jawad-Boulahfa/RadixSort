@@ -45,12 +45,11 @@ create_hoare_partition <- function(V, pivot_index)
     }
     
     # Si i >= j, on renvoie j et le vecteur modifié
-    # 
     
     if(i >= j)
     {
       
-      return(list(new_pivot_index = j, new_V = V_res))
+      return(list(new_pivot_index = i, new_V = V_res))
       
     }
     
