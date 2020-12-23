@@ -7,21 +7,13 @@ create_hoare_partition <- function(V, pivot_index)
   
   V_res <- V
   
-  # On commence par échanger le pivot avec le premier élément du vecteur à trier
-  #tmp <- V_res[1]
-  #V_res[1] <- V_res[pivot_index]
-  #V_res[pivot_index] <- tmp
-  
   # i concerne la partie gauche du vecteur (à gauche du pivot)
   i <- 1
   # j concerne la partie droite du vecteur (à droite du pivot)
   j <- length(V_res)
   
-  #test = TRUE
-  
   # On répète la procédure tant qu'on a pas placé tout les éléments strictement inférieurs au pivot
   # à sa gauche et les éléments strictement supérieurs au pivot à sa droite
-  #while(test)
   while(TRUE)
   {
     # Si un élément est supérieur ou égal au pivot on s'arrête
@@ -53,7 +45,7 @@ create_hoare_partition <- function(V, pivot_index)
     }
     
     # Si i >= j, on renvoie j
-    # i et j pointent sur un élément égal au pivot
+    # 
     
     if(i >= j)
     {
@@ -70,27 +62,6 @@ create_hoare_partition <- function(V, pivot_index)
     V_res[i] <- V_res[j]
     V_res[j] <- tmp_i
     
-    
-    
-    #if(i < j)
-    #{
-    #  # Si i < j, on échange V[i] et V[j] puis on recommence la procédure
-    #  # Il faut les échanger car si on s'est arrêté avant "le milieu" pour i ou pour j
-    #  # ça veut dire que dans le(s) cas en question, l'élément où on s'est arrêté
-    #  # était mal placé.
-    #  tmp_i <- V_res[i]
-    #  V_res[i] <- V_res[j]
-    #  V_res[j] <- tmp_i
-    #}
-    #else
-    #{
-    #  # Sinon on renvoie j (ou i car i = j, i.e. on est "au milieu")
-    #  # i et j pointent sur un élément égal au pivot
-    #  
-    #  test = FALSE
-    #  
-    #  #return(list(new_pivot_index = j, new_V = V_res))
-    #}
     
   }
   return(list(new_pivot_index = j, new_V = V_res))
