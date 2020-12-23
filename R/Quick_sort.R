@@ -115,7 +115,7 @@ quick_sort <- function(V)
     pivot_index <- partition$new_pivot_index
     
     # Partie gauche: éléments à gauche du pivot
-    V_left <- V_partition[1:pivot_index-1]
+    V_left <- V_partition[1:pivot_index]
     # Partie droite: éléments à droite du pivot
     V_right <- V_partition[pivot_index+1:length(V_partition)]
     
