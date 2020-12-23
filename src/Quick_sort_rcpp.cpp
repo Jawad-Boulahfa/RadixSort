@@ -30,12 +30,13 @@ int partition(double V[])
     std::swap(V[i], V[j]);
   }
 }
+*/
 
+
+/*
 // [[Rcpp::export]]
 void quickSort(double V[])
 {
-  
-  /* A finir */
   if (V.length() > 1)
   {
     int pivot_index = partition(V);
