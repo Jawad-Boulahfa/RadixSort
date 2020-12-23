@@ -44,7 +44,7 @@ create_hoare_partition <- function(V, pivot_index)
       
     }
     
-    # Si i >= j, on renvoie j
+    # Si i >= j, on renvoie j et le vecteur modifié
     # 
     
     if(i >= j)
