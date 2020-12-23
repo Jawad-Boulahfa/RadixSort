@@ -17,11 +17,12 @@ create_hoare_partition <- function(V, pivot_index)
   # j concerne la partie droite du vecteur (à droite du pivot)
   j <- length(V_res)
   
-  test = TRUE
+  #test = TRUE
   
   # On répète la procédure tant qu'on a pas placé tout les éléments strictement inférieurs au pivot
   # à sa gauche et les éléments strictement supérieurs au pivot à sa droite
-  while(test)
+  #while(test)
+  while(TRUE)
   {
     # Si un élément est supérieur ou égal au pivot on s'arrête
     # Si i est plus grand que j on s'arrête aussi car on est pas au bon endroit
@@ -51,25 +52,45 @@ create_hoare_partition <- function(V, pivot_index)
       
     }
     
-    if(i < j)
+    # Si i >= j, on renvoie j
+    # i et j pointent sur un élément égal au pivot
+    
+    if(i >= j)
     {
-      # Si i < j, on échange V[i] et V[j] puis on recommence la procédure
-      # Il faut les échanger car si on s'est arrêté avant "le milieu" pour i ou pour j
-      # ça veut dire que dans le(s) cas en question, l'élément où on s'est arrêté
-      # était mal placé.
-      tmp_i <- V_res[i]
-      V_res[i] <- V_res[j]
-      V_res[j] <- tmp_i
-    }
-    else
-    {
-      # Sinon on renvoie j (ou i car i = j, i.e. on est "au milieu"
-      # i et j pointent sur un élément égal au pivot
       
-      test = FALSE
+      return(list(new_pivot_index = j, new_V = V_res))
       
-      #return(list(new_pivot_index = j, new_V = V_res))
     }
+    
+    # Si i < j, on échange V[i] et V[j] puis on recommence la procédure
+    # Il faut les échanger car si on s'est arrêté avant "le milieu" pour i ou pour j
+    # ça veut dire que dans le(s) cas en question, l'élément où on s'est arrêté
+    # était mal placé.
+    tmp_i <- V_res[i]
+    V_res[i] <- V_res[j]
+    V_res[j] <- tmp_i
+    
+    
+    
+    #if(i < j)
+    #{
+    #  # Si i < j, on échange V[i] et V[j] puis on recommence la procédure
+    #  # Il faut les échanger car si on s'est arrêté avant "le milieu" pour i ou pour j
+    #  # ça veut dire que dans le(s) cas en question, l'élément où on s'est arrêté
+    #  # était mal placé.
+    #  tmp_i <- V_res[i]
+    #  V_res[i] <- V_res[j]
+    #  V_res[j] <- tmp_i
+    #}
+    #else
+    #{
+    #  # Sinon on renvoie j (ou i car i = j, i.e. on est "au milieu")
+    #  # i et j pointent sur un élément égal au pivot
+    #  
+    #  test = FALSE
+    #  
+    #  #return(list(new_pivot_index = j, new_V = V_res))
+    #}
     
   }
   return(list(new_pivot_index = j, new_V = V_res))
@@ -93,7 +114,9 @@ quick_sort <- function(V)
     V_partition <- partition$new_V
     pivot_index <- partition$new_pivot_index
     
+    # Partie gauche: éléments à gauche du pivot
     V_left <- V_partition[1:pivot_index-1]
+    # Partie droite: éléments à droite du pivot
     V_right <- V_partition[pivot_index+1:length(V_partition)]
     
     # On trie les éléments à gauche du pivot
