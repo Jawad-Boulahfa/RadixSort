@@ -19,13 +19,13 @@ create_hoare_partition <- function(V, pivot_index)
     # Si un élément est supérieur ou égal au pivot on s'arrête
     # Si i est plus grand que j on s'arrête aussi car on est pas au bon endroit
     # (on n'est plus dans la partie gauche du vecteur)
-    while(V_res[i] <= V_res[pivot_index] & i < j)
+    while(V_res[i] < V_res[pivot_index])
     {
       # Tant que les éléments qu'on regarde en partant du début du vecteur
       # sont plus petits que le pivot, on incrémente l'indice
       # qui permet de compter les éléments à gauche
       # le if sert à ne pas dépasser la taille du vecteur
-      #gif(i < length(V_res))
+      #if(i < length(V_res))
       i <- i + 1
     }
     # Tant que les éléments qu'on regarde en partant de la fin du vecteur
@@ -34,7 +34,7 @@ create_hoare_partition <- function(V, pivot_index)
     # Si un élément est plus petit que le pivot, on s'arrête
     # Si j est plus petit que i on s'arrête aussi car on est pas au bon endroit
     # (on n'est plus dans la partie droite du vecteur)
-    while(V_res[j] > V_res[pivot_index] & j > i)
+    while(V_res[j] > V_res[pivot_index])
     {
       # le if sert à ne pas être en dessous du premier élément du vecteur
       # si j = 0, le if qui suit ne marche pas car la première comparaison renvoie un NULL
@@ -63,7 +63,6 @@ create_hoare_partition <- function(V, pivot_index)
     
     
   }
-  return(list(new_pivot_index = j, new_V = V_res))
 }
 
 
