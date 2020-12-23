@@ -2,10 +2,15 @@
 # et une partie droite où les éléments sont supérieurs au pivot
 # Utilise l'Hoare partitioning pour garder une complexité de O(nlog(n))
 # même dans le cas où tout les éléments sont identiques
-create_hoare_partition <- function(V, pivot_index)
+create_hoare_partition <- function(V)
 {
   
   V_res <- V
+  
+  # Choix du pivot (choisi aléatoirement parmi les éléments du vecteur à trier)
+  pivot <- sample(V_res, 1)
+  
+  #pivot <- V_res[pivot_index]
   
   # i concerne la partie gauche du vecteur (à gauche du pivot)
   i <- 1
@@ -17,7 +22,7 @@ create_hoare_partition <- function(V, pivot_index)
   while(TRUE)
   {
     # Si un élément est supérieur ou égal au pivot on s'arrête (c'est un élément mal placé)
-    while(V_res[i] < V_res[pivot_index])
+    while(V_res[i] < pivot)
     {
       # Tant que les éléments qu'on regarde en partant du début du vecteur
       # sont plus petits que le pivot, on incrémente l'indice
@@ -28,7 +33,7 @@ create_hoare_partition <- function(V, pivot_index)
     # sont plus grands que le pivot, on décrémente l'indice
     # qui permet de compter les éléments à droite
     # Si un élément est inférieur ou égal au pivot, on s'arrête (c'est un élément mal placé)
-    while(V_res[j] > V_res[pivot_index])
+    while(V_res[j] > pivot)
     {
       j <- j - 1
     }
@@ -55,17 +60,11 @@ quick_sort <- function(V)
 {
   if(length(V) > 1)
   {
-    # Choix du pivot (choisi aléatoirement parmi les éléments du vecteur à trier)
-    # sample(length(V), 1) renvoie un indice compris entre 1 et length(V)
-    pivot_index <- sample(length(V), 1)
-    # Le pivot correspond alors à V[pivot_index], on le stocke pour l'utiliser à la fin
-    pivot <- V[pivot_index]
-    
     # Avec create_hoare_partition, on sélectionne un élément comme pivot,
     # et on le place au bon endroit du tableau
     # Tout les éléments à gauche du pivot sont inférieurs ou égaux à celui-ci
     # Tout les éléments à droite du pivot sont supérieurs ou égaux à celui-ci
-    partition <- create_hoare_partition(V = V, pivot_index = pivot_index)
+    partition <- create_hoare_partition(V = V)
     
     V_partition <- partition$new_V
     pivot_index <- partition$new_pivot_index
