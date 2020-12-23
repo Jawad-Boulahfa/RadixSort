@@ -5,6 +5,27 @@
 
 using namespace Rcpp;
 
+// partition
+int partition(double V[]);
+RcppExport SEXP _RadixSort_partition(SEXP V[]SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type V[](V[]SEXP);
+    rcpp_result_gen = Rcpp::wrap(partition(V[]));
+    return rcpp_result_gen;
+END_RCPP
+}
+// quickSort
+void quickSort(double V[]);
+RcppExport SEXP _RadixSort_quickSort(SEXP V[]SEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type V[](V[]SEXP);
+    quickSort(V[]);
+    return R_NilValue;
+END_RCPP
+}
 // tri_digit_Rcpp
 IntegerVector tri_digit_Rcpp(IntegerVector V, int rank);
 RcppExport SEXP _RadixSort_tri_digit_Rcpp(SEXP VSEXP, SEXP rankSEXP) {
@@ -42,6 +63,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_RadixSort_partition", (DL_FUNC) &_RadixSort_partition, 1},
+    {"_RadixSort_quickSort", (DL_FUNC) &_RadixSort_quickSort, 1},
     {"_RadixSort_tri_digit_Rcpp", (DL_FUNC) &_RadixSort_tri_digit_Rcpp, 2},
     {"_RadixSort_tri_digit_Rcpp_opti", (DL_FUNC) &_RadixSort_tri_digit_Rcpp_opti, 2},
     {"_RadixSort_radix_sort_Rcpp", (DL_FUNC) &_RadixSort_radix_sort_Rcpp, 1},

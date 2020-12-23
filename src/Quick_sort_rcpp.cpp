@@ -2,6 +2,7 @@
 using namespace Rcpp;
 using namespace std;
 
+/*
 // [[Rcpp::export]]
 int partition(double V[])
 {
@@ -44,3 +45,4 @@ void quickSort(double V[])
     quickSort(V);
   }
 }
+*/
