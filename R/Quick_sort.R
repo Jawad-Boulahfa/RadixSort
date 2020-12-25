@@ -52,6 +52,14 @@ create_hoare_partition <- function(V)
     tmp_i <- V_res[i]
     V_res[i] <- V_res[j]
     V_res[j] <- tmp_i
+    
+    # Si i et j pointent sur le même élément, on tombe sur une boucle infinie
+    # on force donc j à baisser de 1 pour que l'algorithme continue
+    # dès que j = i, l'algorithme se stoppera
+    if(V_res[i] == V_res[j])
+    {
+      j <- j - 1
+    }
   }
 }
 
