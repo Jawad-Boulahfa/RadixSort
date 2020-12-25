@@ -71,13 +71,20 @@ quick_sort <- function(V)
 
     # Partie gauche: éléments à gauche du pivot
     V_left <- V_partition[1:pivot_index]
-    # Partie droite: éléments à droite du pivot
-    V_right <- V_partition[(pivot_index+1):length(V_partition)]
-    
     # On trie les éléments à gauche du pivot
     if(length(V_left) > 1)
       V_left <- quick_sort(V = V_left)
     
+    # Ce if permet de résoudre un bug. Si pivot_index = length(V_partition)
+    # V_partition[(pivot_index+1):length(V_partition)] = NA V[length(V_partition)]
+    # au lieu de d'être un array de longueur nulle comme on le souhaiterait
+    # il faut donc vérifier qu'on n'est pas dans ce cas là avant de définir V_right
+    if(pivot_index == length(V_partition))
+    {
+      return(V_left)
+    }
+    # Partie droite: éléments à droite du pivot
+    V_right <- V_partition[(pivot_index+1):length(V_partition)]
     # On trie les éléments à droite du pivot
     if(length(V_right) > 1)
       V_right <- quick_sort(V = V_right)
