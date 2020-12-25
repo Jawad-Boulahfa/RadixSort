@@ -72,7 +72,7 @@ quick_sort <- function(V)
     # Partie gauche: éléments à gauche du pivot
     V_left <- V_partition[1:pivot_index]
     # Partie droite: éléments à droite du pivot
-    V_right <- V_partition[pivot_index+1:length(V_partition)]
+    V_right <- V_partition[(pivot_index+1):length(V_partition)]
     
     # On trie les éléments à gauche du pivot
     if(length(V_left) > 1)
@@ -87,8 +87,7 @@ quick_sort <- function(V)
   }
   else
   {
-    res <- V
-    return(res)
+    return(V)
   }
 }
 
