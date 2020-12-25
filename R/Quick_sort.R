@@ -58,13 +58,14 @@ create_hoare_partition <- function(V)
 
 quick_sort <- function(V)
 {
-  if(length(V) > 1)
+  V_tmp <- V
+  if(length(V_tmp) > 1)
   {
     # Avec create_hoare_partition, on sélectionne un élément comme pivot,
     # et on le place au bon endroit du tableau
     # Tout les éléments à gauche du pivot sont inférieurs ou égaux à celui-ci
     # Tout les éléments à droite du pivot sont supérieurs ou égaux à celui-ci
-    partition <- create_hoare_partition(V = V)
+    partition <- create_hoare_partition(V = V_tmp)
     
     V_partition <- partition$new_V
     pivot_index <- partition$new_pivot_index
@@ -88,7 +89,8 @@ quick_sort <- function(V)
   }
   else
   {
-    return(V)
+    res <- V
+    return(res)
   }
 }
 
