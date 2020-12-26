@@ -140,7 +140,7 @@ NumericVector quick_sort_Rcpp(NumericVector V)
     double pivot=tamp[0];
     //
   
-    NumericVector V_left = V[V<=pivot];
+    NumericVector V_left = V[V<pivot];
 
     if(V_left.length() > 1) V_left = quick_sort_Rcpp(V_left);
 
@@ -148,9 +148,12 @@ NumericVector quick_sort_Rcpp(NumericVector V)
     NumericVector V_right = V[V>pivot];
     if(V_right.length() > 1) V_right = quick_sort_Rcpp(V_right);
       
+    NumericVector V_middle = V[V==pivot];
+
     NumericVector output(V.length()); // Prend moins de temps que de réaffectr les valeurs de V.
     for(int i=0;i<V_left.length();i++) output[i]=V_left[i];
-    for(int i=0;i<V_right.length();i++) output[i+V_left.length()]=V_right[i];
+    for(int i=0;i<V_middle.length();i++) output[i+V_left.length()]=V_middle[i];
+    for(int i=0;i<V_right.length();i++) output[i+V_left.length()+V_middle.length()]=V_right[i];
     return( output );
   }
   else

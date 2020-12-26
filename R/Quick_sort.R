@@ -177,7 +177,7 @@ quick_sort_opti <- function(V)
   {
     pivot=sample(V,1);
     
-    V_left <- V[V<=pivot]
+    V_left <- V[V<pivot]
     if(length(V_left) > 1)
       V_left <- quick_sort_opti(V = V_left)
     
@@ -185,7 +185,8 @@ quick_sort_opti <- function(V)
     if(length(V_right) > 1)
       V_right <- quick_sort_opti(V = V_right)
     
-    res <- c(V_left, V_right)
+    V_middle=V[V==pivot]
+    res <- c(V_left,V_middle,V_right)
     return(res)
   }
   else
