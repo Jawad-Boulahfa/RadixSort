@@ -5,6 +5,17 @@
 
 using namespace Rcpp;
 
+// quick_sort_Rcpp
+NumericVector quick_sort_Rcpp(NumericVector V);
+RcppExport SEXP _RadixSort_quick_sort_Rcpp(SEXP VSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
+    rcpp_result_gen = Rcpp::wrap(quick_sort_Rcpp(V));
+    return rcpp_result_gen;
+END_RCPP
+}
 // modulo
 IntegerVector modulo(NumericVector V, int m);
 RcppExport SEXP _RadixSort_modulo(SEXP VSEXP, SEXP mSEXP) {
@@ -76,6 +87,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_RadixSort_quick_sort_Rcpp", (DL_FUNC) &_RadixSort_quick_sort_Rcpp, 1},
     {"_RadixSort_modulo", (DL_FUNC) &_RadixSort_modulo, 2},
     {"_RadixSort_tri_digit_Rcpp_opti", (DL_FUNC) &_RadixSort_tri_digit_Rcpp_opti, 2},
     {"_RadixSort_radix_sort_Rcpp", (DL_FUNC) &_RadixSort_radix_sort_Rcpp, 1},
