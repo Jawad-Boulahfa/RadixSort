@@ -172,9 +172,12 @@ quick_sort <- function(V)
 }
 
 quick_sort_opti <- function(V)
-{
+{ 
   if(length(V) > 1)
   {
+    tri=match(TRUE,diff(V)<0) #check et indique le premier emplacement tel que V[i]>V[i+1] donc mal ordonné.
+    if(is.na(tri)) {return(V)} #Si les éléments sont bien classés alors on renvoie le vecteur directement.
+    
     pivot=sample(V,1);
     
     V_left <- V[V<pivot]
