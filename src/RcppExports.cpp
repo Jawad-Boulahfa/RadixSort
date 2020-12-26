@@ -5,46 +5,83 @@
 
 using namespace Rcpp;
 
-// tri_digit_Rcpp
-IntegerVector tri_digit_Rcpp(IntegerVector V, int rank);
-RcppExport SEXP _RadixSort_tri_digit_Rcpp(SEXP VSEXP, SEXP rankSEXP) {
+// modulo
+IntegerVector modulo(NumericVector V, int m);
+RcppExport SEXP _RadixSort_modulo(SEXP VSEXP, SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
-    Rcpp::traits::input_parameter< int >::type rank(rankSEXP);
-    rcpp_result_gen = Rcpp::wrap(tri_digit_Rcpp(V, rank));
+    Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
+    Rcpp::traits::input_parameter< int >::type m(mSEXP);
+    rcpp_result_gen = Rcpp::wrap(modulo(V, m));
     return rcpp_result_gen;
 END_RCPP
 }
 // tri_digit_Rcpp_opti
-IntegerVector tri_digit_Rcpp_opti(IntegerVector V, int rank);
+NumericVector tri_digit_Rcpp_opti(NumericVector V, int rank);
 RcppExport SEXP _RadixSort_tri_digit_Rcpp_opti(SEXP VSEXP, SEXP rankSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
     Rcpp::traits::input_parameter< int >::type rank(rankSEXP);
     rcpp_result_gen = Rcpp::wrap(tri_digit_Rcpp_opti(V, rank));
     return rcpp_result_gen;
 END_RCPP
 }
 // radix_sort_Rcpp
-IntegerVector radix_sort_Rcpp(IntegerVector V);
+NumericVector radix_sort_Rcpp(NumericVector V);
 RcppExport SEXP _RadixSort_radix_sort_Rcpp(SEXP VSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
     rcpp_result_gen = Rcpp::wrap(radix_sort_Rcpp(V));
+    return rcpp_result_gen;
+END_RCPP
+}
+// nb_decim
+int nb_decim(double nb);
+RcppExport SEXP _RadixSort_nb_decim(SEXP nbSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type nb(nbSEXP);
+    rcpp_result_gen = Rcpp::wrap(nb_decim(nb));
+    return rcpp_result_gen;
+END_RCPP
+}
+// tri_digit_Rcpp_decimal
+NumericVector tri_digit_Rcpp_decimal(NumericVector V, int rank);
+RcppExport SEXP _RadixSort_tri_digit_Rcpp_decimal(SEXP VSEXP, SEXP rankSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
+    Rcpp::traits::input_parameter< int >::type rank(rankSEXP);
+    rcpp_result_gen = Rcpp::wrap(tri_digit_Rcpp_decimal(V, rank));
+    return rcpp_result_gen;
+END_RCPP
+}
+// radix_sort_Rcpp_decimal
+NumericVector radix_sort_Rcpp_decimal(NumericVector V);
+RcppExport SEXP _RadixSort_radix_sort_Rcpp_decimal(SEXP VSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
+    rcpp_result_gen = Rcpp::wrap(radix_sort_Rcpp_decimal(V));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_RadixSort_tri_digit_Rcpp", (DL_FUNC) &_RadixSort_tri_digit_Rcpp, 2},
+    {"_RadixSort_modulo", (DL_FUNC) &_RadixSort_modulo, 2},
     {"_RadixSort_tri_digit_Rcpp_opti", (DL_FUNC) &_RadixSort_tri_digit_Rcpp_opti, 2},
     {"_RadixSort_radix_sort_Rcpp", (DL_FUNC) &_RadixSort_radix_sort_Rcpp, 1},
+    {"_RadixSort_nb_decim", (DL_FUNC) &_RadixSort_nb_decim, 1},
+    {"_RadixSort_tri_digit_Rcpp_decimal", (DL_FUNC) &_RadixSort_tri_digit_Rcpp_decimal, 2},
+    {"_RadixSort_radix_sort_Rcpp_decimal", (DL_FUNC) &_RadixSort_radix_sort_Rcpp_decimal, 1},
     {NULL, NULL, 0}
 };
 
