@@ -179,5 +179,6 @@ NumericVector radix_sort_Rcpp_decimal(NumericVector V){
   NumericVector output(V.length()); // Prend moins de temps que de réaffectr les valeurs de V.
   for(int i=0;i<V_neg.length();i++) output[i]=-V_neg[V_neg.length()-1-i];
   for(int i=0;i<V_pos.length();i++) output[i+V_neg.length()]=V_pos[i];
+
   return( output );
 }

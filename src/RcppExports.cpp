@@ -5,6 +5,17 @@
 
 using namespace Rcpp;
 
+// create_hoare_partition_Rcpp
+List create_hoare_partition_Rcpp(NumericVector V_res);
+RcppExport SEXP _RadixSort_create_hoare_partition_Rcpp(SEXP V_resSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type V_res(V_resSEXP);
+    rcpp_result_gen = Rcpp::wrap(create_hoare_partition_Rcpp(V_res));
+    return rcpp_result_gen;
+END_RCPP
+}
 // quick_sort_Rcpp
 NumericVector quick_sort_Rcpp(NumericVector V);
 RcppExport SEXP _RadixSort_quick_sort_Rcpp(SEXP VSEXP) {
@@ -13,6 +24,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
     rcpp_result_gen = Rcpp::wrap(quick_sort_Rcpp(V));
+    return rcpp_result_gen;
+END_RCPP
+}
+// quick_sort_Rcpp_opti
+NumericVector quick_sort_Rcpp_opti(NumericVector V);
+RcppExport SEXP _RadixSort_quick_sort_Rcpp_opti(SEXP VSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type V(VSEXP);
+    rcpp_result_gen = Rcpp::wrap(quick_sort_Rcpp_opti(V));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -87,7 +109,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_RadixSort_create_hoare_partition_Rcpp", (DL_FUNC) &_RadixSort_create_hoare_partition_Rcpp, 1},
     {"_RadixSort_quick_sort_Rcpp", (DL_FUNC) &_RadixSort_quick_sort_Rcpp, 1},
+    {"_RadixSort_quick_sort_Rcpp_opti", (DL_FUNC) &_RadixSort_quick_sort_Rcpp_opti, 1},
     {"_RadixSort_modulo", (DL_FUNC) &_RadixSort_modulo, 2},
     {"_RadixSort_tri_digit_Rcpp_opti", (DL_FUNC) &_RadixSort_tri_digit_Rcpp_opti, 2},
     {"_RadixSort_radix_sort_Rcpp", (DL_FUNC) &_RadixSort_radix_sort_Rcpp, 1},

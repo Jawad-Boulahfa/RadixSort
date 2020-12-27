@@ -124,11 +124,6 @@ create_three_way_partition <- function(V)
   }
 }
 
-
-
-
-
-
 quick_sort <- function(V)
 {
   if(length(V) > 1)
