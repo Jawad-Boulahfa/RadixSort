@@ -66,9 +66,13 @@ radix_sort_Rcpp(V)
 
 Quick sort avec la fonction codée en R.
 ```{r}
-quick_sort(V)
+quick_sort_opti(V)
 ```
 
+Quick sort avec la fonction codée en Rcpp.
+```{r}
+quick_sort_Rcpp_opti(V)
+```
 
 <a id="n"></a>
 
