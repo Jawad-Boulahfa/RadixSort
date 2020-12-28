@@ -123,7 +123,9 @@ one.simu <- function(n, type = "sample", func = "radix_sort")
   if(func == "heap_sort_Rcpp"){t <- system.time(heap_sort_Rcpp(V))[[1]]}
   if(func == "radix_sort"){t <- system.time(radix_sort(V))[[1]]}
   if(func == "radix_sort_Rcpp"){t <- system.time(radix_sort_Rcpp(V))[[1]]}
-  if(func == "quick_sort"){t <- system.time(quick_sort(V))[[1]]}
+  if(func == "quick_sort_opti"){t <- system.time(quick_sort_opti(V))[[1]]}
+  if(func == "quick_sort_Rcpp_opti"){t <- system.time(quick_sort_Rcpp_opti(V))[[1]]}
+
 
   return(t)
 }
@@ -164,8 +166,13 @@ one.simu(n = n, func = "heap_sort_Rcpp")
 ```
 
 ```{r}
-one.simu(n = n, func = "quick_sort")
+one.simu(n = n, func = "quick_sort_opti")
 ```
+
+```{r}
+one.simu(n = n, func = "quick_sort_Rcpp_opti")
+```
+
 
 ### Simulations dans le "cas moyen"
 
@@ -183,7 +190,7 @@ t2 <- 0
 #t3 <- 0
 t4 <- 0
 t5 <- 0
-#t6 <- 0
+t6 <- 0
 #t7 <- 0
 #t8 <- 0
 
@@ -192,7 +199,8 @@ for(i in 1:nbSimus){t1 <- t1 + one.simu(n = n, func = "radix_sort")}
 for(i in 1:nbSimus){t2 <- t2 + one.simu(n = n, func = "radix_sort_Rcpp")}
 #for(i in 1:nbSimus){t3 <- t3 + one.simu(n = n, func = "heap_sort")}
 for(i in 1:nbSimus){t4 <- t4 + one.simu(n = n, func = "heap_sort_Rcpp")}
-for(i in 1:nbSimus){t5 <- t5 + one.simu(n = n, func = "quick_sort")}
+for(i in 1:nbSimus){t5 <- t5 + one.simu(n = n, func = "quick_sort_opti")}
+for(i in 1:nbSimus){t6 <- t6 + one.simu(n = n, func = "quick_sort_Rcpp_opti")}
 
 #for(i in 1:nbSimus){t7 <- t7 + one.simu(n = n, func = "insertion_sort")}
 #for(i in 1:nbSimus){t8 <- t8 + one.simu(n = n, func = "insertion_sort_Rcpp")}
@@ -204,7 +212,8 @@ t1 # temps d'exécution du radix sort en R
 t2 # temps d'exécution du radix sort en Rcpp
 # t3 # temps d'exécution du heap sort en R
 t4 # temps d'exécution du heap sort en Rcpp
-t5 # temps d'exécution du quick sort en R (trop lent... A optimiser)
+t5 # temps d'exécution du quick sort en R
+t6 # temps d'exécution du quick sort en Rcpp
 ```
 
 Comparaison des temps d'exécution.
@@ -213,7 +222,7 @@ t1/t2 # radix sort gain R -> Rcpp
 # t3/t4 # heap sort gain R -> Rcpp
 # t1/t3 # comparaison radix sort en R et heap sort en R
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
-# t5/t6 # quick sort gain R -> Rcpp
+t5/t6 # quick sort gain R -> Rcpp
 # t7/t8 # insertion sort gain R -> Rcpp
 
 ```
@@ -239,7 +248,7 @@ t2_log <- 0
 #t3_log <- 0
 t4_log <- 0
 t5_log <- 0
-#t6_log <- 0
+t6_log <- 0
 #t7_log <- 0
 #t8_log <- 0
 
@@ -249,7 +258,8 @@ for(i in 1:nbSimus){t1_log <- t1_log + one.simu(n = n, type = "log", func = "rad
 for(i in 1:nbSimus){t2_log <- t2_log + one.simu(n = n, type = "log", func = "radix_sort_Rcpp")}
 #for(i in 1:nbSimus){t3_log <- t3_log + one.simu(n = n, type = "log", func = "heap_sort")}
 for(i in 1:nbSimus){t4_log <- t4_log + one.simu(n = n, type = "log", func = "heap_sort_Rcpp")}
-for(i in 1:nbSimus){t5_log <- t5_log + one.simu(n = n, type = "log", func = "quick_sort")}
+for(i in 1:nbSimus){t5_log <- t5_log + one.simu(n = n, type = "log", func = "quick_sort_opti")}
+for(i in 1:nbSimus){t6_log <- t6_log + one.simu(n = n, type = "log", func = "quick_sort_Rcpp_opti")}
 
 #for(i in 1:nbSimus){t7 <- t7 + one.simu(n = n, type = "log", func = "insertion_sort")}
 #for(i in 1:nbSimus){t8 <- t8 + one.simu(n = n, type = "log", func = "insertion_sort_Rcpp")}
@@ -262,6 +272,7 @@ t2_log # temps d'exécution du radix sort en Rcpp
 #t3_log # temps d'exécution du heap sort en R
 t4_log # temps d'exécution du heap sort en Rcpp
 t5_log # temps d'exécution du quick sort en R
+t6_log # temps d'exécution du quick sort en Rcpp
 ```
 
 Comparaison des temps d'exécution.
@@ -270,7 +281,7 @@ t1_log/t2_log # radix sort gain R -> Rcpp
 #t3_log/t4_log # heap sort gain R -> Rcpp
 #t1_log/t3_log # comparaison radix sort en R et heap sort en R
 t2_log/t4_log # comparaison radix sort en Rcpp et heap sort en Rcpp
-# t5_log/t6_log # quick sort gain R -> Rcpp
+t5_log/t6_log # quick sort gain R -> Rcpp
 # t7_log/t8_log # insertion sort gain R -> Rcpp
 
 ```
@@ -291,7 +302,7 @@ t2_worst <- 0
 #t3_worst <- 0
 t4_worst <- 0
 t5_worst <- 0
-#t6_worst <- 0
+t6_worst <- 0
 #t7_worst <- 0
 #t8_worst <- 0
 
@@ -301,8 +312,8 @@ for(i in 1:nbSimus){t1_worst <- t1_worst + one.simu(n = n, type = "", func = "ra
 for(i in 1:nbSimus){t2_worst <- t2_worst + one.simu(n = n, type = "", func = "radix_sort_Rcpp")}
 #for(i in 1:nbSimus){t3_worst <- t3_worst + one.simu(n = n, type = "", func = "heap_sort")}
 for(i in 1:nbSimus){t4_worst <- t4_worst + one.simu(n = n, type = "", func = "heap_sort_Rcpp")}
-for(i in 1:nbSimus){t5_worst <- t5_worst + one.simu(n = n, type = "", func = "quick_sort")}
-#for(i in 1:nbSimus){t6_worst <- t6_worst + one.simu(n = n, type = "", func = "quick_sort_Rcpp")}
+for(i in 1:nbSimus){t5_worst <- t5_worst + one.simu(n = n, type = "", func = "quick_sort_opti")}
+for(i in 1:nbSimus){t6_worst <- t6_worst + one.simu(n = n, type = "", func = "quick_sort_Rcpp_opti")}
 #for(i in 1:nbSimus){t7_worst <- t7_worst + one.simu(n = n, type = "", func = "insertion_sort")}
 #for(i in 1:nbSimus){t8_worst <- t8_worst + one.simu(n = n, type = "", func = "insertion_sort_Rcpp")}
 ```
@@ -314,7 +325,7 @@ t2_worst # temps d'exécution du radix sort en Rcpp
 #t3_worst # temps d'exécution du heap sort en R
 t4_worst # temps d'exécution du heap sort en Rcpp
 t5_worst # temps d'exécution du quick sort en R
-#t6_worst # temps d'exécution du quick sort en Rcpp
+t6_worst # temps d'exécution du quick sort en Rcpp
 #t7_worst # temps d'exécution du insertion sort en R
 #t8_worst # temps d'exécution du insertion sort en Rcpp
 ```
@@ -323,11 +334,10 @@ Comparaison des temps d'exécution.
 ```{r}
 t1_worst/t2_worst # radix sort gain R -> Rcpp
 # t3_worst/t4_worst # heap sort gain R -> Rcpp
-# t5_worst/t6_worst # quick sort gain R -> Rcpp
 # t7_worst/t8_worst # insertion sort gain R -> Rcpp
 # t1_worst/t3_worst # comparaison radix sort en R et heap sort en R
 t2_worst/t4_worst # comparaison radix sort en Rcpp et heap sort en Rcpp
-
+t5_worst/t6_worst # quick sort gain R -> Rcpp
 ```
 
 
@@ -350,7 +360,8 @@ n <- 10^4
 res <- microbenchmark(one.simu(n = n, func = "radix_sort"),
                       one.simu(n = n, func = "radix_sort_Rcpp"),
                       one.simu(n = n, func = "heap_sort_Rcpp"),
-                      one.simu(n = n, func = "quick_sort"),
+                      one.simu(n = n, func = "quick_sort_opti"),
+                      one.simu(n = n, func = "quick_sort_Rcpp_opti")
                       times = 50)
 autoplot(res)
 print(res)
@@ -363,7 +374,9 @@ On fait maintenant un second essai avec une plus grande taille pour le vecteur �
 ```{r}
 n <- 10^6
 res <- microbenchmark(one.simu(n = n, func = "radix_sort_Rcpp"),
-                      one.simu(n = n, func = "heap_sort_Rcpp"), times = 50)
+                      one.simu(n = n, func = "heap_sort_Rcpp"),
+                      one.simu(n = n, func = "quick_sort_Rcpp_opti"),
+                      times = 50)
 autoplot(res)
 print(res)
 ```
@@ -381,7 +394,8 @@ n <- 10^(exposant)
 res <- microbenchmark(one.simu(n = n, type = "log", func = "radix_sort"),
                       one.simu(n = n, type = "log", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "log", func = "heap_sort_Rcpp"),
-                      one.simu(n = n, type = "log", func = "quick_sort"),
+                      one.simu(n = n, type = "log", func = "quick_sort_opti"),
+                      one.simu(n = n, type = "log", func = "quick_sort_Rcpp_opti"),
                       times = 50)
 autoplot(res)
 print(res)
@@ -398,7 +412,9 @@ exposant <- 8
 ```{r}
 n <- 10^(exposant)
 res <- microbenchmark(one.simu(n = n, type = "log", func = "radix_sort_Rcpp"),
-                      one.simu(n = n, type = "log", func = "heap_sort_Rcpp"), times = 50)
+                      one.simu(n = n, type = "log", func = "heap_sort_Rcpp"),
+                      one.simu(n = n, type = "log", func = "quick_sort_Rcpp_opti"),
+                      times = 50)
 autoplot(res)
 print(res)
 ```
@@ -415,7 +431,8 @@ n <- 10^4
 res <- microbenchmark(one.simu(n = n, type = "", func = "radix_sort"),
                       one.simu(n = n, type = "", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "", func = "heap_sort_Rcpp"),
-                      one.simu(n = n, type = "", func = "quick_sort"),
+                      one.simu(n = n, type = "", func = "quick_sort_opti"),
+                      one.simu(n = n, type = "", func = "quick_sort_Rcpp_opti"),
                       times = 50)
 autoplot(res)
 print(res)
@@ -429,7 +446,9 @@ Ainsi, le heap sort est légèrement meilleur que le radix sort seulement sur de
 ```{r}
 n <- 10^6
 res <- microbenchmark(one.simu(n = n, type = "", func = "radix_sort_Rcpp"),
-                      one.simu(n = n, type = "", func = "heap_sort_Rcpp"), times = 50)
+                      one.simu(n = n, type = "", func = "heap_sort_Rcpp"),
+                      one.simu(n = n, type = "", func = "quick_sort_Rcpp_opti"),
+                      times = 50)
 autoplot(res)
 print(res)
 ```
@@ -513,3 +532,25 @@ plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in secon
 ```
 
 Plus le nombre d'éléments à stocker est grand, plus la différence entre le heap sort et le radix sort se fait grande.
+
+### Quick sort en Rcpp
+
+Généralement le heap sort en Rcpp est plus lent que le radix sort en Rcpp ce qui est cohérent avec les résultats précédents (partie `Comparaison entre le radix sort en Rcpp et le heap sort en Rcpp ("cas moyen")`).
+```{r}
+nbSimus <- 20
+vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
+nbRep <- 100
+res_quick_sort_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_quick_sort_rcpp) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_quick_sort_rcpp[j,] <- c(i, replicate(nbRep, one.simu(i, func = "quick_sort_Rcpp_opti")))  
+  #print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_quick_sort_rcpp[,-1])
+plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
+```
