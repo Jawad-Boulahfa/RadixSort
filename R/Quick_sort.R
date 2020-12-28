@@ -1,9 +1,15 @@
-# But : séparer V en une partie gauche où les éléments et inférieurs au pivot
-# et une partie droite où les éléments sont supérieurs au pivot
-# Utilise l'Hoare partitioning pour garder une complexité de O(nlog(n))
-# même dans le cas où tout les éléments sont identiques
+#' create_hoare_partition
+#' @description Apply Hoare partitioning on a vector
+#' @param V a vector
+#' @return a list containing the index of the randomly selected pivot after partitioning and the vector after partitioning
+#' @examples
+#' create_hoare_partition(V = 1:10)
 create_hoare_partition <- function(V)
 {
+  # But : séparer V en une partie gauche où les éléments et inférieurs au pivot
+  # et une partie droite où les éléments sont supérieurs au pivot
+  # Utilise l'Hoare partitioning pour garder une complexité de O(nlog(n))
+  # même dans le cas où tout les éléments sont identiques
   
   V_res <- V
   
@@ -63,9 +69,15 @@ create_hoare_partition <- function(V)
   }
 }
 
-# Quick sort avec la méthode hoare (pas optimal, utiliser le three way partitioning est mieux)
+#' quick_sort
+#' @description Quick sort algorithm using Hoare partitioning
+#' @param V the vector to sort
+#' @return the sorted vector
+#' @examples
+#' quick_sort(V = sample(10))
 quick_sort <- function(V)
 {
+  # Quick sort avec la méthode hoare (pas optimal, utiliser le three way partitioning est mieux)
   if(length(V) > 1)
   {
     # Avec create_hoare_partition, on sélectionne un élément comme pivot,
@@ -106,9 +118,17 @@ quick_sort <- function(V)
   }
 }
 
-# Quick sort avec three way partitioning
+
+
+#' quick_sort_opti
+#' @description Quick sort algorithm using three way partitioning
+#' @param V the vector to sort
+#' @return the sorted vector
+#' @examples
+#' quick_sort_opti(V = sample(10))
 quick_sort_opti <- function(V)
 { 
+  # Quick sort avec three way partitioning
   if(length(V) > 1)
   {
     # Check et indique le premier emplacement tel que V[i]>V[i+1] donc mal ordonné.
