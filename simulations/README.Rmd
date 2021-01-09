@@ -198,7 +198,7 @@ one.simu(n = n, func = "quick_sort_Rcpp_opti")
 On commence par s'intéresser aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire (avec remise) d'entiers compris entre 1 et $n$.
 ```{r}
 # Valeur de n (taille du vecteur à trier)
-n <- 10^5
+n <- 10^4
 
 # Nombre de fois où on répète l'algorithme sur un vecteur de taille n
 nbSimus <- 10
@@ -260,7 +260,7 @@ t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 On s'intéresse ici aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire (avec remise) d'entiers compris entre $-n$ et $n$.
 ```{r}
 # Valeur de n (taille du vecteur à trier)
-n <- 10^5
+n <- 10^4
 
 # Nombre de fois où on répète l'algorithme sur un vecteur de taille n
 nbSimus <- 10
@@ -329,7 +329,7 @@ t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 On commence par s'intéresser aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire (avec remise) d'entiers compris entre 1 et $n$.
 ```{r}
 # Valeur de n (taille du vecteur à trier)
-n <- 10^5
+n <- 10^4
 
 # Nombre de fois où on répète l'algorithme sur un vecteur de taille n
 nbSimus <- 10
@@ -343,8 +343,8 @@ t5 <- 0
 t6 <- 0
 
 # Simulations
-for(i in 1:nbSimus){t1 <- t1 + one.simu(n = n, type = "decimal", func = "radix_sort")}
-for(i in 1:nbSimus){t2 <- t2 + one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp")}
+for(i in 1:nbSimus){t1 <- t1 + one.simu(n = n, type = "decimal", func = "radix_sort_decimal")}
+for(i in 1:nbSimus){t2 <- t2 + one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal")}
 for(i in 1:nbSimus){t3 <- t3 + one.simu(n = n, type = "decimal", func = "heap_sort")}
 for(i in 1:nbSimus){t4 <- t4 + one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp")}
 for(i in 1:nbSimus){t5 <- t5 + one.simu(n = n, type = "decimal", func = "quick_sort_opti")}
@@ -391,7 +391,7 @@ t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 On s'intéresse ici aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire (avec remise) d'entiers compris entre $-n$ et $n$.
 ```{r}
 # Valeur de n (taille du vecteur à trier)
-n <- 10^5
+n <- 10^4
 
 # Nombre de fois où on répète l'algorithme sur un vecteur de taille n
 nbSimus <- 10
@@ -406,9 +406,9 @@ t6 <- 0
 
 # Simulations
 for(i in 1:nbSimus){t1 <- t1 + one.simu(n = n, type = "negative decimal",
-                                        func = "radix_sort")}
+                                        func = "radix_sort_decimal")}
 for(i in 1:nbSimus){t2 <- t2 + one.simu(n = n, type = "negative decimal",
-                                        func = "radix_sort_Rcpp")}
+                                        func = "radix_sort_Rcpp_decimal")}
 for(i in 1:nbSimus){t3 <- t3 + one.simu(n = n, type = "negative decimal",
                                         func = "heap_sort")}
 for(i in 1:nbSimus){t4 <- t4 + one.simu(n = n, type = "negative decimal",
@@ -459,7 +459,7 @@ t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 On s'intéresse ici aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont rangées dans l'ordre décroissant.
 ```{r}
 # Valeur de n (taille du vecteur à trier)
-n <- 10^6
+n <- 10^4
 
 # Nombre de fois où on répète l'algorithme sur un vecteur de taille n
 nbSimus <- 10
@@ -545,9 +545,9 @@ print(res)
 ```
 
 
-On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^6$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
+On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^5$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
 ```{r}
-n <- 10^6
+n <- 10^5
 res <- microbenchmark(one.simu(n = n, type = "integer", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "integer", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "integer", func = "quick_sort_Rcpp_opti"),
@@ -577,7 +577,7 @@ print(res)
 
 On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^6$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
 ```{r}
-n <- 10^6
+n <- 10^5
 res <- microbenchmark(one.simu(n = n, type = "negative integer", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "negative integer", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "negative integer", func = "quick_sort_Rcpp_opti"),
@@ -593,8 +593,8 @@ Sur cet exemple, avec un vecteur de taille $10^4$, on remarque que le radix sort
 Le radix sort en Rcpp semble meilleur que le heap sort en Rcpp, mais pour confirmer cela, nous allons faire un second essai avec un vecteur plus grand.
 ```{r}
 n <- 10^4
-res <- microbenchmark(one.simu(n = n, type = "decimal", func = "radix_sort"),
-                      one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp"),
+res <- microbenchmark(one.simu(n = n, type = "decimal", func = "radix_sort_decimal"),
+                      one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal"),
                       one.simu(n = n, type = "decimal", func = "heap_sort"),
                       one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "decimal", func = "quick_sort_opti"),
@@ -607,8 +607,8 @@ print(res)
 
 On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^6$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
 ```{r}
-n <- 10^6
-res <- microbenchmark(one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp"),
+n <- 10^5
+res <- microbenchmark(one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal"),
                       one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "decimal", func = "quick_sort_Rcpp_opti"),
                       times = 50)
@@ -623,8 +623,8 @@ Sur cet exemple, avec un vecteur de taille $10^4$, on remarque que le radix sort
 Le radix sort en Rcpp semble meilleur que le heap sort en Rcpp, mais pour confirmer cela, nous allons faire un second essai avec un vecteur plus grand.
 ```{r}
 n <- 10^4
-res <- microbenchmark(one.simu(n = n, type = "negative decimal", func = "radix_sort"),
-                      one.simu(n = n, type = "negative decimal", func = "radix_sort_Rcpp"),
+res <- microbenchmark(one.simu(n = n, type = "negative decimal", func = "radix_sort_decimal"),
+                      one.simu(n = n, type = "negative decimal", func = "radix_sort_Rcpp_decimal"),
                       one.simu(n = n, type = "negative decimal", func = "heap_sort"),
                       one.simu(n = n, type = "negative decimal", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "negative decimal", func = "quick_sort_opti"),
@@ -637,8 +637,8 @@ print(res)
 
 On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^6$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
 ```{r}
-n <- 10^6
-res <- microbenchmark(one.simu(n = n, type = "negative decimal", func = "radix_sort_Rcpp"),
+n <- 10^5
+res <- microbenchmark(one.simu(n = n, type = "negative decimal", func = "radix_sort_Rcpp_decimal"),
                       one.simu(n = n, type = "negative decimal", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "negative decimal", func = "quick_sort_Rcpp_opti"),
                       times = 50)
@@ -671,7 +671,7 @@ print(res)
 On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^6$ ici). On remarque le radix sort est meilleur que le heap sort ici.
 Ainsi, le heap sort est légèrement meilleur que le radix sort seulement sur de plus petites tailles de données.
 ```{r}
-n <- 10^6
+n <- 10^5
 res <- microbenchmark(one.simu(n = n, type = "reverse", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "reverse", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "reverse", func = "quick_sort_Rcpp_opti"),
@@ -684,7 +684,7 @@ print(res)
 
 ## Complexité
 
-Le but de cette partie est d'évaluer la complexité du radix sort dans le "cas moyen".
+Le but de cette partie est d'évaluer la complexité des deux versions du radix sort (celle pour les entiers, et celle qui marche également avec les décimaux), du heap sort et du quick sort.
 
 ### Radix sort en R
 
@@ -709,7 +709,7 @@ plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in secon
 ```
 
 ```{r}
-lm(res ~ vector_n)
+#lm(res ~ vector_n)
 ```
 
 
@@ -735,6 +735,54 @@ for(i in vector_n)
 res <- rowMeans(res_radix_rcpp[,-1])
 plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
 ```
+
+### Radix sort en R (version nombres décimaux)
+
+En Rcpp, on constate qu'on gagne énormément de temps par rapport au code R.
+Cependant, on n'a plus du tout la tendance "linéaire" de la courbe.
+```{r}
+nbSimus <- 10
+vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
+nbRep <- 100
+res_radix_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_radix_rcpp) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_radix_rcpp[j,] <- c(i, replicate(nbRep, one.simu(i, func = "radix_sort_decimal")))  
+  #print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_radix_rcpp[,-1])
+plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
+```
+
+### Radix sort en R (version nombres décimaux)
+
+En Rcpp, on constate qu'on gagne énormément de temps par rapport au code R.
+Cependant, on n'a plus du tout la tendance "linéaire" de la courbe.
+```{r}
+nbSimus <- 10
+vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
+nbRep <- 100
+res_radix_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
+colnames(res_radix_rcpp) <- c("n", paste0("Rep",1:nbRep))
+
+j <- 1
+for(i in vector_n)
+{
+  res_radix_rcpp[j,] <- c(i, replicate(nbRep, one.simu(i, func = "radix_sort_Rcpp_decimal")))  
+  #print(j)
+  j <- j + 1
+}
+
+res <- rowMeans(res_radix_rcpp[,-1])
+plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
+```
+
+
 
 ### Heap sort en Rcpp
 
