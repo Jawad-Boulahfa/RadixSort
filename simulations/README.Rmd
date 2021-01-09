@@ -759,7 +759,7 @@ res <- rowMeans(res_radix_rcpp[,-1])
 plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
 ```
 
-### Radix sort en R (version nombres décimaux)
+### Radix sort en Rcpp (version nombres décimaux)
 
 En Rcpp, on constate qu'on gagne énormément de temps par rapport au code R.
 Cependant, on n'a plus du tout la tendance "linéaire" de la courbe.
