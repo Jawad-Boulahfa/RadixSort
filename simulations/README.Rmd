@@ -690,7 +690,7 @@ Le but de cette partie est d'évaluer la complexité du radix sort dans le "cas 
 
 On lance $nbRep = 100$ fois l'algorithme radix sort pour chaque valeur du vecteur `vector_n` de taille $nbSimus = 20$. On affiche le graphe du temps d'exécution moyen en fonction de la taille des données.
 ```{r}
-nbSimus <- 20
+nbSimus <- 10
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_radix <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -718,7 +718,7 @@ lm(res ~ vector_n)
 En Rcpp, on constate qu'on gagne énormément de temps par rapport au code R.
 Cependant, on n'a plus du tout la tendance "linéaire" de la courbe.
 ```{r}
-nbSimus <- 20
+nbSimus <- 10
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_radix_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -740,7 +740,7 @@ plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in secon
 
 Généralement le heap sort en Rcpp est plus lent que le radix sort en Rcpp ce qui est cohérent avec les résultats précédents (partie `Comparaison entre le radix sort en Rcpp et le heap sort en Rcpp ("cas moyen")`).
 ```{r}
-nbSimus <- 20
+nbSimus <- 10
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_heap_sort_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -764,7 +764,7 @@ Plus le nombre d'éléments à stocker est grand, plus la différence entre le h
 
 Généralement le heap sort en Rcpp est plus lent que le radix sort en Rcpp ce qui est cohérent avec les résultats précédents (partie `Comparaison entre le radix sort en Rcpp et le heap sort en Rcpp ("cas moyen")`).
 ```{r}
-nbSimus <- 20
+nbSimus <- 10
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_quick_sort_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
