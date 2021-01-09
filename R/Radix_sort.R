@@ -1,3 +1,9 @@
+#' tri_digit
+#'
+#' @description Trie le vecteur V selon un indicateur de position nommé rank (1 pour trier selon les unités, 2 pour trier selon les dizaines et les unités etc.)
+#' @param V le vecteur à trier selon l'indicateur de position rank
+#' @param rank indicateur de position (1 pour les unités, 2 pour les dizaines, etc.)
+#' @return Le vecteur trié selon l'indicateur de position rank
 tri_digit <- function(V, rank)
 {
   # n = taille du vecteur V (nombre d'éléments à trier)
@@ -70,7 +76,17 @@ tri_digit <- function(V, rank)
   return(res)
 }
 
+#####################################
+#####################################
 
+
+
+#' tri_digit
+#'
+#' @description Version optimisée de la fonction tri_digit
+#' @param V le vecteur à trier selon l'indicateur de position rank
+#' @param rank indicateur de position (1 pour les unités, 2 pour les dizaines, etc.)
+#' @return Le vecteur trié selon l'indicateur de position rank
 tri_digit_opti <- function(V,rank){
   n <- length(V)
   vect_count <- rep(0,10)
@@ -95,6 +111,7 @@ tri_digit_opti <- function(V,rank){
   return(res)
 }
 
+# Vieille version: ne trie que les entiers positifs
 # radix_sort <- function(V)
 # {
 #   elt_max <- max(V) # élément maximum de la liste
@@ -116,65 +133,75 @@ tri_digit_opti <- function(V,rank){
 ### A COMMENTER ###
 
 
-radix_sort <- function(V){
+# Cette version de l'algorithme permet de trier les entiers négatifs et positifs
+radix_sort <- function(V)
+{
   
-  V_neg=-V[sign(V)==-1]
+  V_neg <- -V[sign(V) == -1]
   
-  if(length(V_neg)>1){
-    elt_max=max(V_neg)
-    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
-      V_neg=tri_digit_opti(V_neg,rank)
+  if(length(V_neg) > 1)
+  {
+    elt_max <- max(V_neg)
+    for (rank in (1:(trunc(log(elt_max, base = 10)) + 1)))
+    {
+      V_neg <- tri_digit_opti(V_neg, rank)
     }
   }
   
-  V_pos= V[sign(V)!=-1]
+  V_pos <- V[sign(V) != -1]
   
-  if(length(V_pos)>1){
-    elt_max=max(V_pos)
-    for (rank in (1: (trunc(log(elt_max, base=10))+1) ) ){
-      V_pos=tri_digit_opti(V_pos,rank)
+  if(length(V_pos) > 1)
+  {
+    elt_max <- max(V_pos)
+    for (rank in (1:(trunc(log(elt_max, base = 10)) + 1)))
+    {
+      V_pos <- tri_digit_opti(V_pos, rank)
     }
   }
-  return( c(-rev(V_neg),V_pos) )
+  return(c(-rev(V_neg), V_pos))
 }
 
 
 ### A COMMENTER ###
 
-radix_sort_decimal <- function(V){
+# Cette version de l'algorithme permet de trier les nombres décimaux (négatifs et positifs)
+radix_sort_decimal <- function(V)
+{
+  V_neg <- -V[sign(V) == -1]
   
-  V_neg=-V[sign(V)==-1]
-  if(length(V_neg)>1){
-    nb_decimal=-min(max(sapply(V_neg,FUN=nb_decim)),16) #le nb de digit après la virgule
-    elt_max=max(V_neg)
-    for (rank in ( (nb_decimal+1) : (trunc(log(elt_max, base=10))+1) ) ){
-      V_neg=tri_digit_opti_decimal(V_neg,rank)
+  if(length(V_neg) > 1)
+  {
+    nb_decimal <- -min(max(sapply(V_neg, FUN = nb_decim)), 16) #le nb de digit après la virgule
+    elt_max <- max(V_neg)
+    for (rank in ((nb_decimal+1):(trunc(log(elt_max, base = 10)) + 1)))
+    {
+      V_neg <- tri_digit_opti_decimal(V_neg, rank)
     }
   }
   
   
-  V_pos= V[sign(V)!=-1]
-  if(length(V_pos)>1){
-    nb_decimal=-min(max(sapply(V_pos,FUN=nb_decim),16))
+  V_pos <- V[sign(V) != -1]
+  if(length(V_pos) > 1)
+  {
+    nb_decimal <- -min(max(sapply(V_pos, FUN = nb_decim), 16))
     elt_max=max(V_pos)
-    for (rank in ( (nb_decimal+1) : (trunc(log(elt_max, base=10))+1) ) ){
-      V_pos=tri_digit_opti_decimal(V_pos,rank)
+    for (rank in ((nb_decimal + 1):(trunc(log(elt_max, base = 10))+1)))
+    {
+      V_pos <- tri_digit_opti_decimal(V_pos,rank)
     }
   }
-  return( c(-rev(V_neg),V_pos) )
-  
+  return(c(-rev(V_neg), V_pos))
 }
+
 
 tri_digit_opti_decimal <- function(V,rank){
   n <- length(V)
   vect_count <- rep(0,10)
   res <- rep(0,n)
   tamp <- 10^(rank-1)
-  #if(rank>0){res <- trunc(V)/tamp ; V_idx <- trunc(res)%%10+1}
-  #if(rank<=0){ res <- abs(V - trunc(V))/tamp ; V_idx <- trunc(res)%%10+1}
-  
-  if(rank>0){ V_idx <- trunc(trunc(V)/tamp)%%10+1}
-  else{V_idx <- trunc( (V - trunc(V))/tamp)%%10+1}
+
+  if(rank>0){V_idx <- trunc(trunc(V)/tamp)%%10+1}
+  else{V_idx <- trunc((V - trunc(V))/tamp)%%10+1}
   
   for (i in 1:n){ 
     vect_count[V_idx[i]] <- vect_count[V_idx[i]]+1
@@ -189,7 +216,9 @@ tri_digit_opti_decimal <- function(V,rank){
   return(res)
 }
 
-nb_decim<-function(nb){
+
+nb_decim <- function(nb)
+{
   return(match(TRUE, round(nb, 1:20) == nb))
 }
 

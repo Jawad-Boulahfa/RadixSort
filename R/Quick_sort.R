@@ -1,6 +1,7 @@
 #' create_hoare_partition
+#' 
 #' @description Apply Hoare partitioning on a vector
-#' @param V a vector
+#' @param V a vector of numeric data
 #' @return a list containing the index of the randomly selected pivot after partitioning and the vector after partitioning
 #' @examples
 #' create_hoare_partition(V = 1:10)
