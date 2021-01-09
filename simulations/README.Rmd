@@ -6,7 +6,7 @@ output: github_document
 ### Jawad Boulahfa, Kylliann De Santiago, Romain Brulé
 #### M2 Data Science: Santé, Assurance, Finance
 #### Université d'Evry Val d'Essonne
-### 14 décembre 2020
+### 9 janvier 2021
 
 > [Introduction](#intro)
 
