@@ -136,7 +136,6 @@ tri_digit_opti <- function(V,rank){
 # Cette version de l'algorithme permet de trier les entiers négatifs et positifs
 radix_sort <- function(V)
 {
-  
   V_neg <- -V[sign(V) == -1]
   
   if(length(V_neg) > 1)
@@ -184,7 +183,7 @@ radix_sort_decimal <- function(V)
   if(length(V_pos) > 1)
   {
     nb_decimal <- -min(max(sapply(V_pos, FUN = nb_decim), 16))
-    elt_max=max(V_pos)
+    elt_max <- max(V_pos)
     for (rank in ((nb_decimal + 1):(trunc(log(elt_max, base = 10))+1)))
     {
       V_pos <- tri_digit_opti_decimal(V_pos,rank)

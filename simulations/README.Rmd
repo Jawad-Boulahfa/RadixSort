@@ -605,7 +605,7 @@ print(res)
 ```
 
 
-On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^6$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
+On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^5$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
 ```{r}
 n <- 10^5
 res <- microbenchmark(one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal"),
