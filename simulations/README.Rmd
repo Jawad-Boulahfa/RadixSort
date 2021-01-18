@@ -102,7 +102,7 @@ Plus précisément, on va comparer les performances du radix sort avec le heap s
 Tout d'abord, on définit une fonction qui nous permettra d'exécuter une simulation (i.e. un tri de vecteur) selon l'algorithme de tri choisi et la taille $n$ du vecteur fixée par l'utilisateur.
 On introduit également un paramètre "type" qui permet de choisir la forme du vecteur à trier.
 ```{r}
-one.simu <- function(n, type = "integer", func = "radix_sort", precision = 3)
+one.simu <- function(n, type = "integer", func = "radix_sort", precision = 5)
 {
   ### Choix du type de vecteur à trier ###
   
@@ -233,8 +233,7 @@ t5 # temps d'exécution du quick sort en R
 t6 # temps d'exécution du quick sort en Rcpp
 ```
 On remarque que heap sort (version R) est à nouveau le plus lent de tous.
-Cependant, l'algorithme le plus rapide est le heap sort (version Rcpp).
-Il est très légèrement meilleur que le radix sort (version Rcpp) alors que sur notre premier essai, les deux algorithmes avaient la même performance.
+Cependant, l'algorithme le plus rapide est le radix sort (version Rcpp) suivi du heap sort (version Rcpp) alors que sur notre premier essai, ces deux algorithmes avaient la même performance.
 Concernant le quick sort, ce dernier est assez lent comparé aux autres que ce soit en R ou en Rcpp (`r t6` secondes pour la version Rcpp).
 Ainsi, effectuer davantage de simulations nous a permis de mieux comparer les algorithmes.
 
@@ -262,7 +261,7 @@ t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
-En Rcpp, c'est clairement le heap sort qui permet les meilleurs gains de temps.
+En Rcpp, c'est clairement le radix sort qui permet les meilleurs gains de temps.
 
 
 ### Simulations avec des nombres entiers relatifs
@@ -332,13 +331,13 @@ t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
-En Rcpp, c'est clairement le heap sort qui permet les meilleurs gains de temps.
+En Rcpp, c'est clairement le heap sort qui permet les meilleurs gains de temps ici contrairement aux simulations précédentes (avec les entiers naturels).
 
-Les constations sont donc globalement les mêmes que dans les simulations précédentes.
+Il est intéressant de noter qu'avec des entiers relatifs, le heap sort (version Rcpp) est meilleur que le radix sort (version Rcpp) et le radix sort et meilleur que le quick sort (pour les deux versions).
 
-### Simulations avec des nombres décimaux non signés
+### Simulations avec des nombres décimaux positifs
 
-On commence par s'intéresser aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire (avec remise) d'entiers compris entre 1 et $n$.
+On commence par s'intéresser aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire de nombres décimaux positifs compris entre 0 et $n$ (avec une précision de $10^{-5}$).
 ```{r}
 # Valeur de n (taille du vecteur à trier)
 n <- 10^4
@@ -379,28 +378,29 @@ t1/t2 # radix sort gain R -> Rcpp
 t3/t4 # heap sort gain R -> Rcpp
 t5/t6 # quick sort gain R -> Rcpp
 ```
-Lorqu'on utilise le radix sort codé en R au lieu de celui codé en Rcpp, on multiplie par environ `r round(t1/t2, 2)` le temps d'exécution.
-Lorqu'on utilise le heap sort codé en R au lieu de celui codé en Rcpp, on multiplie par environ `r round(t3/t4, 2)` le temps d'exécution.
-Lorqu'on utilise le quick sort codé en R au lieu de celui codé en Rcpp, on multiplie par environ `r round(t5/t2, 2)` le temps d'exécution.
-Ainsi, le code est Rcpp est toujours bien plus rapide que celui en R.
 
-
+Comparaison des temps d'exécution en R.
 ```{r}
 t1/t3 # comparaison radix sort en R et heap sort en R
 t1/t5 # comparaison radix sort en R et quick sort en R
 t3/t5 # comparaison heap sort en R et quick sort en R
 ```
 
-
+Comparaison des temps d'exécution en Rcpp.
 ```{r}
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
+Cette fois-ci, le radix sort est `r t2/t4` fois plus lent que le heap sort.
+
+Là encore, le heap sort (version Rcpp) affiche les meilleures performances.
+Malgré notre adaptation du radix sort pour le tri des nombres décimaux, ce dernier, quelque soit la version considérée, reste plus lent que le heap sort (version Rcpp).
+Cependant, le radix sort reste meilleur que le quick sort (pour les deux versions).
 
 ### Simulations avec des nombres décimaux signés
 
-On s'intéresse ici aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire (avec remise) d'entiers compris entre $-n$ et $n$.
+On commence par s'intéresser aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont issus d'un tirage aléatoire de nombres décimaux signés compris entre $-n$ et $n$ (avec une précision de $10^{-5}$).
 ```{r}
 # Valeur de n (taille du vecteur à trier)
 n <- 10^4
@@ -466,6 +466,9 @@ t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
 
+Les constatations sont ici globalement les mêmes que dans les simulations précédentes.
+Cependant, on peut noter ici que le heap sort (version Rcpp) est encore plus efficace qu'habituellement ici.
+
 ### Simulations dans le cas où le vecteur est trié dans l'ordre décroissant
 
 On s'intéresse ici aux performances de chaque algorithme dans le cas où les valeurs du vecteurs à trier sont rangées dans l'ordre décroissant.
@@ -509,11 +512,6 @@ t1/t2 # radix sort gain R -> Rcpp
 t3/t4 # heap sort gain R -> Rcpp
 t5/t6 # quick sort gain R -> Rcpp
 ```
-Lorqu'on utilise le radix sort codé en R au lieu de celui codé en Rcpp, on multiplie par environ `r round(t1/t2, 2)` le temps d'exécution.
-Lorqu'on utilise le heap sort codé en R au lieu de celui codé en Rcpp, on multiplie par environ `r round(t3/t4, 2)` le temps d'exécution.
-Lorqu'on utilise le quick sort codé en R au lieu de celui codé en Rcpp, on multiplie par environ `r round(t5/t2, 2)` le temps d'exécution.
-Ainsi, le code est Rcpp est toujours bien plus rapide que celui en R.
-
 
 ```{r}
 t1/t3 # comparaison radix sort en R et heap sort en R
@@ -528,11 +526,16 @@ t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
 
+Ici, le radix sort (version Rcpp) et le heap sort (version Rcpp) affichent les mêmes performances.
+
+Toutes ces simulations nous ont données un aperçu des performances de nos algorithmes dans différents contextes. Si on compare uniquement les versions Rcpp de nos trois algorithmes de tri, on constate après ces simulations que le quick sort semble être le plus lent des trois.
 
 <a id="micro"></a>
 
 ## Microbenchmark
 
+Le but de cette partie est d'effectuer des simulations plus approfondies sur nos trois algorithmes de tri afin de mieux les comparer.
+Pour cela, nous allons utiliser les packages `microbenchmark` et `ggplot2`.
 ```{r, warning=FALSE}
 library(microbenchmark)
 library(ggplot2)
@@ -557,7 +560,7 @@ print(res)
 ```
 
 
-On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^5$ ici). On remarque le radix sort est meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations dans le "cas moyen"`).
+On fait maintenant un second essai avec une plus grande taille pour le vecteur à trier ($n = 10^5$ ici). On remarque le radix sort est généralement meilleur que le heap sort. Ce qui est cohérent avec les résultats précédents (partie `Simulations avec des entiers naturels`).
 ```{r}
 n <- 10^6
 res <- microbenchmark(one.simu(n = n, type = "integer", func = "radix_sort_Rcpp"),
