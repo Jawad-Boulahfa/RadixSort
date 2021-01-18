@@ -130,7 +130,6 @@ tri_digit_opti <- function(V,rank){
 #   return(V)
 # }
 
-### A COMMENTER ###
 
 
 # Cette version de l'algorithme permet de trier les entiers négatifs et positifs
