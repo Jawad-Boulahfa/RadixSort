@@ -168,7 +168,7 @@ radix_sort_decimal <- function(V)
   
   if(length(V_neg) > 1)
   {
-    nb_decimal <- -min(max(sapply(V_neg, FUN = nb_decim), 16)) #le nb de digit après la virgule
+    nb_decimal <- -min(max(sapply(V_neg, FUN = nb_decim)), 16) #le nb de digit après la virgule
     elt_max <- max(V_neg)
     for (rank in ((nb_decimal+1):(trunc(log(elt_max, base = 10)) + 1)))
     {
@@ -181,7 +181,7 @@ radix_sort_decimal <- function(V)
   
   if(length(V_pos) > 1)
   {
-    nb_decimal <- -min(max(sapply(V_pos, FUN = nb_decim), 16))
+    nb_decimal <- -min(max(sapply(V_pos, FUN = nb_decim)), 16)
     elt_max <- max(V_pos)
     for (rank in ((nb_decimal + 1):(trunc(log(elt_max, base = 10))+1)))
     {
