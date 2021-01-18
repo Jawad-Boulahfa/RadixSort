@@ -161,11 +161,10 @@ radix_sort <- function(V)
 }
 
 
-### A COMMENTER ###
-
 # Cette version de l'algorithme permet de trier les nombres décimaux (négatifs et positifs)
 radix_sort_decimal <- function(V)
 {
+  # Isole les nombres négatifs et on change leur signe
   V_neg <- -V[sign(V) == -1]
   
   if(length(V_neg) > 1)
@@ -178,8 +177,9 @@ radix_sort_decimal <- function(V)
     }
   }
   
-  
+  # On isole aussi les nombres positifs
   V_pos <- V[sign(V) != -1]
+  
   if(length(V_pos) > 1)
   {
     nb_decimal <- -min(max(sapply(V_pos, FUN = nb_decim), 16))
