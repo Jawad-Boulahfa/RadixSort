@@ -693,9 +693,9 @@ On évaluera cette complexité en utilisant des vecteurs de nombres entiers natu
 
 ### Radix sort en R
 
-On lance $nbRep = 100$ fois l'algorithme radix sort pour chaque valeur du vecteur `vector_n` de taille $nbSimus = 10$. On affiche le graphe du temps d'exécution moyen en fonction de la taille des données.
+On lance $nbRep = 100$ fois l'algorithme radix sort pour chaque valeur du vecteur `vector_n` de taille $nbSimus = 20$. On affiche le graphe du temps d'exécution moyen en fonction de la taille des données.
 ```{r}
-nbSimus <- 10
+nbSimus <- 20
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_radix <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -723,7 +723,7 @@ lm(log(res) ~ log(vector_n))
 En Rcpp, on constate qu'on gagne énormément de temps par rapport au code R.
 Cependant, on n'a plus du tout la tendance "linéaire" de la courbe.
 ```{r}
-nbSimus <- 10
+nbSimus <- 20
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_radix_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -747,8 +747,10 @@ lm(log(res) ~ log(vector_n))
 
 ### Radix sort en R (version nombres décimaux)
 
+On remarque que l'algorithme est bien plus lent ici comparé à la version optimisée pour les entiers naturels et relatifs.
+Cela s'explique par le fait que celui-ci a été optimisé pour le tri des nombres décimaux.
 ```{r}
-nbSimus <- 10
+nbSimus <- 20
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_radix_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -772,10 +774,10 @@ lm(log(res) ~ log(vector_n))
 
 ### Radix sort en Rcpp (version nombres décimaux)
 
-En Rcpp, on constate qu'on gagne énormément de temps par rapport au code R.
+En Rcpp, on constate à nouveau qu'on gagne énormément de temps par rapport au code R.
 Cependant, on n'a plus du tout la tendance "linéaire" de la courbe.
 ```{r}
-nbSimus <- 10
+nbSimus <- 20
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_radix_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -799,8 +801,9 @@ lm(log(res) ~ log(vector_n))
 
 ### Heap sort en Rcpp
 
+Le heap sort est généralement plus lent que le radix sort ici, ce qui est cohérent avec les constatations des parties précédentes.
 ```{r}
-nbSimus <- 10
+nbSimus <- 20
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_heap_sort_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
@@ -824,9 +827,9 @@ lm(log(res) ~ log(vector_n))
 
 ### Quick sort en Rcpp
 
-
+Le quick sort est généralement le plus lent des trois ici, ce qui est cohérent avec les constatations des parties précédentes.
 ```{r}
-nbSimus <- 10
+nbSimus <- 20
 vector_n <- seq(from = 5000, to = 50000, length.out = nbSimus)
 nbRep <- 100
 res_quick_sort_rcpp <- data.frame(matrix(0, nbSimus, nbRep + 1))
