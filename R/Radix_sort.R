@@ -107,7 +107,7 @@ tri_digit_opti <- function(V,rank){
     res[tamp2[V_idx[i]]] <- V[i];
     tamp2[V_idx[i]] <- tamp2[V_idx[i]]-1;
   }
-
+  
   return(res)
 }
 
@@ -199,7 +199,7 @@ tri_digit_opti_decimal <- function(V,rank){
   vect_count <- rep(0,10)
   res <- rep(0,n)
   tamp <- 10^(rank-1)
-
+  
   if(rank>0){V_idx <- trunc(trunc(V)/tamp)%%10+1}
   else{V_idx <- trunc((V - trunc(V))/tamp)%%10+1}
   
