@@ -7,7 +7,7 @@
 
 #### Université d’Evry Val d’Essonne
 
-### 14 décembre 2020
+### 9 janvier 2021
 
 > [Introduction](#intro)
 
@@ -73,7 +73,7 @@ Vecteur à trier.
 V
 ```
 
-    ##  [1]  5 10  7 10  8  1  6  2  8  8
+    ##  [1] 4 1 2 3 5 8 8 9 4 7
 
 Radix sort avec la fonction codée en R.
 
@@ -81,7 +81,7 @@ Radix sort avec la fonction codée en R.
 radix_sort(V)
 ```
 
-    ##  [1]  1  2  5  6  7  8  8  8 10 10
+    ##  [1] 1 2 3 4 4 5 7 8 8 9
 
 Radix sort avec la fonction codée en Rcpp.
 
@@ -89,7 +89,7 @@ Radix sort avec la fonction codée en Rcpp.
 radix_sort_Rcpp(V)
 ```
 
-    ##  [1]  1  2  5  6  7  8  8  8 10 10
+    ##  [1] 1 2 3 4 4 5 7 8 8 9
 
 Heap sort avec la fonction codée en R.
 
@@ -97,7 +97,7 @@ Heap sort avec la fonction codée en R.
 heap_sort(V)
 ```
 
-    ##  [1]  1  2  5  6  7  8  8  8 10 10
+    ##  [1] 1 2 3 4 4 5 7 8 8 9
 
 Heap sort avec la fonction codée en Rcpp.
 
@@ -105,7 +105,7 @@ Heap sort avec la fonction codée en Rcpp.
 heap_sort_Rcpp(V)
 ```
 
-    ##  [1]  1  2  5  6  7  8  8  8 10 10
+    ##  [1] 1 2 3 4 4 5 7 8 8 9
 
 Quick sort avec la fonction codée en R.
 
@@ -113,7 +113,7 @@ Quick sort avec la fonction codée en R.
 quick_sort_opti(V)
 ```
 
-    ##  [1]  1  2  5  6  7  8  8  8 10 10
+    ##  [1] 1 2 3 4 4 5 7 8 8 9
 
 Quick sort avec la fonction codée en Rcpp.
 
@@ -121,7 +121,7 @@ Quick sort avec la fonction codée en Rcpp.
 quick_sort_Rcpp_opti(V)
 ```
 
-    ##  [1]  1  2  5  6  7  8  8  8 10 10
+    ##  [1] 1 2 3 4 4 5 7 8 8 9
 
 <a id="n"></a>
 
@@ -135,12 +135,13 @@ sort.
 ### Une simulation
 
 Tout d’abord, on définit une fonction qui nous permettra d’exécuter une
-simulation (i.e. un tri de vecteur) selon l’algorithme choisi et la
-valeur de \(n\) fixée par l’utilisateur. On introduit également un
-paramètre “type” qui permet de choisir la forme du vecteur à trier.
+simulation (i.e. un tri de vecteur) selon l’algorithme de tri choisi et
+la taille \(n\) du vecteur fixée par l’utilisateur. On introduit
+également un paramètre “type” qui permet de choisir la forme du vecteur
+à trier.
 
 ``` r
-one.simu <- function(n, type = "integer", func = "radix_sort", precision = 3)
+one.simu <- function(n, type = "integer", func = "radix_sort", precision = 5)
 {
   ### Choix du type de vecteur à trier ###
   
@@ -207,7 +208,7 @@ n <- 10^4
 
 On fait une première simulation pour chacun des algorithmes avec
 \(n = 10^{4}\) afin d’illustrer le fonctionnement de `one.simu`. Par
-défaut, le vecteur a trier est issu d’un tirage aléatoire avec (remise)
+défaut, le vecteur a trier est issu d’un tirage aléatoire (avec remise)
 d’entiers compris entre 1 et \(n\).
 
 ``` r
@@ -220,31 +221,38 @@ one.simu(n = n, func = "radix_sort")
 one.simu(n = n, func = "radix_sort_Rcpp")
 ```
 
-    ## [1] 0
+    ## [1] 0.02
 
 ``` r
 one.simu(n = n, func = "heap_sort")
 ```
 
-    ## [1] 0.47
+    ## [1] 0.28
 
 ``` r
 one.simu(n = n, func = "heap_sort_Rcpp")
 ```
 
-    ## [1] 0.02
+    ## [1] 0
 
 ``` r
 one.simu(n = n, func = "quick_sort_opti")
 ```
 
-    ## [1] 0.11
+    ## [1] 0.08
 
 ``` r
 one.simu(n = n, func = "quick_sort_Rcpp_opti")
 ```
 
-    ## [1] 0.01
+    ## [1] 0.02
+
+On conclut que les algorithmes les plus rapides sont le radix sort
+(version Rcpp) et le heap sort (version Rcpp) sur ce premier essai. Le
+plus lent est le heap sort (version R). On peut également noter un gain
+de temps considérable entre le heap sort (version R) et le heap sort
+(version Rcpp). Dans tout les cas, le code en Rcpp est toujours plus
+rapide que le code en R.
 
 ### Simulations avec des nombres entiers naturels
 
@@ -288,13 +296,13 @@ t1 # temps d'exécution du radix sort en R
 t2 # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0.01
+    ## [1] 0
 
 ``` r
 t3 # temps d'exécution du heap sort en R
 ```
 
-    ## [1] 4.79
+    ## [1] 3.08
 
 ``` r
 t4 # temps d'exécution du heap sort en Rcpp
@@ -306,77 +314,91 @@ t4 # temps d'exécution du heap sort en Rcpp
 t5 # temps d'exécution du quick sort en R
 ```
 
-    ## [1] 0.99
+    ## [1] 0.78
 
 ``` r
 t6 # temps d'exécution du quick sort en Rcpp
 ```
 
-    ## [1] 0.14
+    ## [1] 0.12
 
-Comparaison des temps d’exécution.
+On remarque que heap sort (version R) est à nouveau le plus lent de
+tous. Cependant, l’algorithme le plus rapide est le radix sort (version
+Rcpp) suivi du heap sort (version Rcpp) alors que sur notre premier
+essai, ces deux algorithmes avaient la même performance. Concernant le
+quick sort, ce dernier est assez lent comparé aux autres que ce soit en
+R ou en Rcpp (0.12 secondes pour la version Rcpp). Ainsi, effectuer
+davantage de simulations nous a permis de mieux comparer les
+algorithmes.
+
+Calcul du gain en passant de R à Rcpp.
 
 ``` r
 t1/t2 # radix sort gain R -> Rcpp
 ```
 
-    ## [1] 20
+    ## [1] Inf
 
 ``` r
 t3/t4 # heap sort gain R -> Rcpp
 ```
 
-    ## [1] 239.5
+    ## [1] 154
 
 ``` r
 t5/t6 # quick sort gain R -> Rcpp
 ```
 
-    ## [1] 7.071429
+    ## [1] 6.5
 
-Lorqu’on utilise le radix sort codé en R au lieu de celui codé en Rcpp,
-on multiplie par environ 20 le temps d’exécution. Lorqu’on utilise le
-heap sort codé en R au lieu de celui codé en Rcpp, on multiplie par
-environ 239.5 le temps d’exécution. Lorqu’on utilise le quick sort codé
-en R au lieu de celui codé en Rcpp, on multiplie par environ 99 le temps
-d’exécution. Ainsi, le code est Rcpp est toujours bien plus rapide que
-celui en R.
+Le code est Rcpp est toujours bien plus rapide que celui en R. Par
+exemple, le radix sort en Rcpp est  fois plus rapide qu’en R.
+
+Comparaison des temps d’exécution en R.
 
 ``` r
 t1/t3 # comparaison radix sort en R et heap sort en R
 ```
 
-    ## [1] 0.04175365
+    ## [1] 0.06493506
 
 ``` r
 t1/t5 # comparaison radix sort en R et quick sort en R
 ```
 
-    ## [1] 0.2020202
+    ## [1] 0.2564103
 
 ``` r
 t3/t5 # comparaison heap sort en R et quick sort en R
 ```
 
-    ## [1] 4.838384
+    ## [1] 3.948718
+
+En R, le radix sort est plus rapide que le heap sort et le quick sort.
+Enfin, le quick sort est environ 3.95 fois plus rapide que le heap sort.
+
+Comparaison des temps d’exécution en Rcpp.
 
 ``` r
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] 0.5
+    ## [1] 0
 
 ``` r
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.07142857
+    ## [1] 0
 
 ``` r
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.1428571
+    ## [1] 0.1666667
+
+En Rcpp, c’est clairement le radix sort qui permet les meilleurs gains
+de temps.
 
 ### Simulations avec des nombres entiers relatifs
 
@@ -420,107 +442,118 @@ On affiche les temps d’exécution pour effectuer 10 simulations.
 t1 # temps d'exécution du radix sort en R
 ```
 
-    ## [1] 0.24
+    ## [1] 0.17
 
 ``` r
 t2 # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0.04
+    ## [1] 0.06
 
 ``` r
 t3 # temps d'exécution du heap sort en R
 ```
 
-    ## [1] 9.04
+    ## [1] 5.14
 
 ``` r
 t4 # temps d'exécution du heap sort en Rcpp
 ```
 
-    ## [1] 0
+    ## [1] 0.02
 
 ``` r
 t5 # temps d'exécution du quick sort en R
 ```
 
-    ## [1] 1.38
+    ## [1] 0.82
 
 ``` r
 t6 # temps d'exécution du quick sort en Rcpp
 ```
 
-    ## [1] 0.17
+    ## [1] 0.11
 
-Comparaison des temps d’exécution.
+On peut noter ici la grande efficacité du heap sort (version Rcpp) sur
+ces données. Le radix sort (version Rcpp) est également très performant.
+
+Calcul du gain en passant de R à Rcpp.
 
 ``` r
 t1/t2 # radix sort gain R -> Rcpp
 ```
 
-    ## [1] 6
+    ## [1] 2.833333
 
 ``` r
 t3/t4 # heap sort gain R -> Rcpp
 ```
 
-    ## [1] Inf
+    ## [1] 257
 
 ``` r
 t5/t6 # quick sort gain R -> Rcpp
 ```
 
-    ## [1] 8.117647
+    ## [1] 7.454545
 
-Lorqu’on utilise le radix sort codé en R au lieu de celui codé en Rcpp,
-on multiplie par environ 6 le temps d’exécution. Lorqu’on utilise le
-heap sort codé en R au lieu de celui codé en Rcpp, on multiplie par
-environ  le temps d’exécution. Lorqu’on utilise le quick sort codé en R
-au lieu de celui codé en Rcpp, on multiplie par environ 34.5 le temps
-d’exécution. Ainsi, le code est Rcpp est toujours bien plus rapide que
-celui en R.
+Comparaison des temps d’exécution en R.
 
 ``` r
 t1/t3 # comparaison radix sort en R et heap sort en R
 ```
 
-    ## [1] 0.02654867
+    ## [1] 0.03307393
 
 ``` r
 t1/t5 # comparaison radix sort en R et quick sort en R
 ```
 
-    ## [1] 0.173913
+    ## [1] 0.2073171
 
 ``` r
 t3/t5 # comparaison heap sort en R et quick sort en R
 ```
 
-    ## [1] 6.550725
+    ## [1] 6.268293
+
+En R, le radix sort est plus rapide que le heap sort et le quick sort.
+Enfin, le quick sort est environ 6.27 fois plus rapide que le heap sort.
+
+Comparaison des temps d’exécution en Rcpp.
 
 ``` r
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] Inf
+    ## [1] 3
 
 ``` r
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.2352941
+    ## [1] 0.5454545
 
 ``` r
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0
+    ## [1] 0.1818182
 
-### Simulations avec des nombres décimaux non signés
+En Rcpp, c’est clairement le heap sort qui permet les meilleurs gains de
+temps ici contrairement aux simulations précédentes (avec les entiers
+naturels).
+
+Il est intéressant de noter qu’avec des entiers relatifs, le heap sort
+(version Rcpp) est meilleur que le radix sort (version Rcpp) et le radix
+sort et meilleur que le quick sort (pour les deux versions).
+
+### Simulations avec des nombres décimaux positifs
 
 On commence par s’intéresser aux performances de chaque algorithme dans
 le cas où les valeurs du vecteurs à trier sont issus d’un tirage
-aléatoire (avec remise) d’entiers compris entre 1 et \(n\).
+aléatoire de nombres décimaux positifs compris entre 0 et \(n\) (avec
+une précision de \(10^{-5}\)).
 
 ``` r
 # Valeur de n (taille du vecteur à trier)
@@ -552,107 +585,112 @@ On affiche les temps d’exécution pour effectuer 10 simulations.
 t1 # temps d'exécution du radix sort en R
 ```
 
-    ## [1] 1.19
+    ## [1] 0.61
 
 ``` r
 t2 # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0.05
+    ## [1] 0.07
 
 ``` r
 t3 # temps d'exécution du heap sort en R
 ```
 
-    ## [1] 9.06
+    ## [1] 4.73
 
 ``` r
 t4 # temps d'exécution du heap sort en Rcpp
 ```
 
-    ## [1] 0.04
+    ## [1] 0.02
 
 ``` r
 t5 # temps d'exécution du quick sort en R
 ```
 
-    ## [1] 1.41
+    ## [1] 0.93
 
 ``` r
 t6 # temps d'exécution du quick sort en Rcpp
 ```
 
-    ## [1] 0.23
+    ## [1] 0.09
 
-Comparaison des temps d’exécution.
+Calcul du gain en passant de R à Rcpp.
 
 ``` r
 t1/t2 # radix sort gain R -> Rcpp
 ```
 
-    ## [1] 23.8
+    ## [1] 8.714286
 
 ``` r
 t3/t4 # heap sort gain R -> Rcpp
 ```
 
-    ## [1] 226.5
+    ## [1] 236.5
 
 ``` r
 t5/t6 # quick sort gain R -> Rcpp
 ```
 
-    ## [1] 6.130435
+    ## [1] 10.33333
 
-Lorqu’on utilise le radix sort codé en R au lieu de celui codé en Rcpp,
-on multiplie par environ 23.8 le temps d’exécution. Lorqu’on utilise le
-heap sort codé en R au lieu de celui codé en Rcpp, on multiplie par
-environ 226.5 le temps d’exécution. Lorqu’on utilise le quick sort codé
-en R au lieu de celui codé en Rcpp, on multiplie par environ 28.2 le
-temps d’exécution. Ainsi, le code est Rcpp est toujours bien plus rapide
-que celui en R.
+Comparaison des temps d’exécution en R.
 
 ``` r
 t1/t3 # comparaison radix sort en R et heap sort en R
 ```
 
-    ## [1] 0.1313466
+    ## [1] 0.1289641
 
 ``` r
 t1/t5 # comparaison radix sort en R et quick sort en R
 ```
 
-    ## [1] 0.8439716
+    ## [1] 0.655914
 
 ``` r
 t3/t5 # comparaison heap sort en R et quick sort en R
 ```
 
-    ## [1] 6.425532
+    ## [1] 5.086022
+
+Comparaison des temps d’exécution en Rcpp.
 
 ``` r
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] 1.25
+    ## [1] 3.5
 
 ``` r
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.2173913
+    ## [1] 0.7777778
 
 ``` r
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.173913
+    ## [1] 0.2222222
+
+Cette fois-ci, le radix sort est 3.5 fois plus lent que le heap sort.
+
+Là encore, le heap sort (version Rcpp) affiche les meilleures
+performances. Malgré notre adaptation du radix sort pour le tri des
+nombres décimaux, ce dernier, quelque soit la version considérée, reste
+plus lent que le heap sort (version Rcpp). Cependant, le radix sort
+reste meilleur que le quick sort (pour les deux versions).
 
 ### Simulations avec des nombres décimaux signés
 
-On s’intéresse ici aux performances de chaque algorithme dans le cas où
-les valeurs du vecteurs à trier sont issus d’un tirage aléatoire (avec
-remise) d’entiers compris entre \(-n\) et \(n\).
+On commence par s’intéresser aux performances de chaque algorithme dans
+le cas où les valeurs du vecteurs à trier sont issus d’un tirage
+aléatoire de nombres décimaux signés compris entre \(-n\) et \(n\)
+(avec une précision de \(10^{-5}\)).
 
 ``` r
 # Valeur de n (taille du vecteur à trier)
@@ -690,37 +728,37 @@ On affiche les temps d’exécution pour effectuer 10 simulations.
 t1 # temps d'exécution du radix sort en R
 ```
 
-    ## [1] 1.17
+    ## [1] 0.62
 
 ``` r
 t2 # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0.09
+    ## [1] 0.08
 
 ``` r
 t3 # temps d'exécution du heap sort en R
 ```
 
-    ## [1] 8.43
+    ## [1] 4.81
 
 ``` r
 t4 # temps d'exécution du heap sort en Rcpp
 ```
 
-    ## [1] 0.01
+    ## [1] 0.02
 
 ``` r
 t5 # temps d'exécution du quick sort en R
 ```
 
-    ## [1] 1.37
+    ## [1] 0.94
 
 ``` r
 t6 # temps d'exécution du quick sort en Rcpp
 ```
 
-    ## [1] 0.15
+    ## [1] 0.13
 
 Comparaison des temps d’exécution.
 
@@ -728,63 +766,67 @@ Comparaison des temps d’exécution.
 t1/t2 # radix sort gain R -> Rcpp
 ```
 
-    ## [1] 13
+    ## [1] 7.75
 
 ``` r
 t3/t4 # heap sort gain R -> Rcpp
 ```
 
-    ## [1] 843
+    ## [1] 240.5
 
 ``` r
 t5/t6 # quick sort gain R -> Rcpp
 ```
 
-    ## [1] 9.133333
+    ## [1] 7.230769
 
 Lorqu’on utilise le radix sort codé en R au lieu de celui codé en Rcpp,
-on multiplie par environ 13 le temps d’exécution. Lorqu’on utilise le
+on multiplie par environ 7.75 le temps d’exécution. Lorqu’on utilise le
 heap sort codé en R au lieu de celui codé en Rcpp, on multiplie par
-environ 843 le temps d’exécution. Lorqu’on utilise le quick sort codé en
-R au lieu de celui codé en Rcpp, on multiplie par environ 15.22 le temps
-d’exécution. Ainsi, le code est Rcpp est toujours bien plus rapide que
-celui en R.
+environ 240.5 le temps d’exécution. Lorqu’on utilise le quick sort codé
+en R au lieu de celui codé en Rcpp, on multiplie par environ 11.75 le
+temps d’exécution. Ainsi, le code est Rcpp est toujours bien plus rapide
+que celui en R.
 
 ``` r
 t1/t3 # comparaison radix sort en R et heap sort en R
 ```
 
-    ## [1] 0.13879
+    ## [1] 0.1288981
 
 ``` r
 t1/t5 # comparaison radix sort en R et quick sort en R
 ```
 
-    ## [1] 0.8540146
+    ## [1] 0.6595745
 
 ``` r
 t3/t5 # comparaison heap sort en R et quick sort en R
 ```
 
-    ## [1] 6.153285
+    ## [1] 5.117021
 
 ``` r
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] 9
+    ## [1] 4
 
 ``` r
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.6
+    ## [1] 0.6153846
 
 ``` r
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.06666667
+    ## [1] 0.1538462
+
+Les constatations sont ici globalement les mêmes que dans les
+simulations précédentes. Cependant, on peut noter ici que le heap sort
+(version Rcpp) est encore plus efficace qu’habituellement ici.
 
 ### Simulations dans le cas où le vecteur est trié dans l’ordre décroissant
 
@@ -821,19 +863,19 @@ On affiche les temps d’exécution pour effectuer 10 simulations.
 t1 # temps d'exécution du radix sort en R
 ```
 
-    ## [1] 0.26
+    ## [1] 0.22
 
 ``` r
 t2 # temps d'exécution du radix sort en Rcpp
 ```
 
-    ## [1] 0.04
+    ## [1] 0
 
 ``` r
 t3 # temps d'exécution du heap sort en R
 ```
 
-    ## [1] 3.77
+    ## [1] 2.35
 
 ``` r
 t4 # temps d'exécution du heap sort en Rcpp
@@ -845,13 +887,13 @@ t4 # temps d'exécution du heap sort en Rcpp
 t5 # temps d'exécution du quick sort en R
 ```
 
-    ## [1] 1.4
+    ## [1] 1
 
 ``` r
 t6 # temps d'exécution du quick sort en Rcpp
 ```
 
-    ## [1] 0.19
+    ## [1] 0.09
 
 Comparaison des temps d’exécution.
 
@@ -859,67 +901,71 @@ Comparaison des temps d’exécution.
 t1/t2 # radix sort gain R -> Rcpp
 ```
 
-    ## [1] 6.5
+    ## [1] Inf
 
 ``` r
 t3/t4 # heap sort gain R -> Rcpp
 ```
 
-    ## [1] 188.5
+    ## [1] 117.5
 
 ``` r
 t5/t6 # quick sort gain R -> Rcpp
 ```
 
-    ## [1] 7.368421
-
-Lorqu’on utilise le radix sort codé en R au lieu de celui codé en Rcpp,
-on multiplie par environ 6.5 le temps d’exécution. Lorqu’on utilise le
-heap sort codé en R au lieu de celui codé en Rcpp, on multiplie par
-environ 188.5 le temps d’exécution. Lorqu’on utilise le quick sort codé
-en R au lieu de celui codé en Rcpp, on multiplie par environ 35 le temps
-d’exécution. Ainsi, le code est Rcpp est toujours bien plus rapide que
-celui en R.
+    ## [1] 11.11111
 
 ``` r
 t1/t3 # comparaison radix sort en R et heap sort en R
 ```
 
-    ## [1] 0.06896552
+    ## [1] 0.09361702
 
 ``` r
 t1/t5 # comparaison radix sort en R et quick sort en R
 ```
 
-    ## [1] 0.1857143
+    ## [1] 0.22
 
 ``` r
 t3/t5 # comparaison heap sort en R et quick sort en R
 ```
 
-    ## [1] 2.692857
+    ## [1] 2.35
 
 ``` r
 t2/t4 # comparaison radix sort en Rcpp et heap sort en Rcpp
 ```
 
-    ## [1] 2
+    ## [1] 0
 
 ``` r
 t2/t6 # comparaison radix sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.2105263
+    ## [1] 0
 
 ``` r
 t4/t6 # comparaison heap sort en Rcpp et quick sort en Rcpp
 ```
 
-    ## [1] 0.1052632
+    ## [1] 0.2222222
+
+Ici, le radix sort (version Rcpp) et le heap sort (version Rcpp)
+affichent les mêmes performances.
+
+Toutes ces simulations nous ont données un aperçu des performances de
+nos algorithmes dans différents contextes. Si on compare uniquement les
+versions Rcpp de nos trois algorithmes de tri, on constate après ces
+simulations que le quick sort semble être le plus lent des trois.
 
 <a id="micro"></a>
 
 ## Microbenchmark
+
+Le but de cette partie est d’effectuer des simulations plus approfondies
+sur nos trois algorithmes de tri afin de mieux les comparer. Pour cela,
+nous allons utiliser les packages `microbenchmark` et `ggplot2`.
 
 ``` r
 library(microbenchmark)
@@ -956,27 +1002,27 @@ print(res)
 
     ## Unit: milliseconds
     ##                                                              expr      min
-    ##            one.simu(n = n, type = "integer", func = "radix_sort")  66.6112
-    ##       one.simu(n = n, type = "integer", func = "radix_sort_Rcpp")  51.8449
-    ##             one.simu(n = n, type = "integer", func = "heap_sort") 493.9443
-    ##        one.simu(n = n, type = "integer", func = "heap_sort_Rcpp")  50.8321
-    ##       one.simu(n = n, type = "integer", func = "quick_sort_opti") 122.7648
-    ##  one.simu(n = n, type = "integer", func = "quick_sort_Rcpp_opti")  66.2770
+    ##            one.simu(n = n, type = "integer", func = "radix_sort")  56.1807
+    ##       one.simu(n = n, type = "integer", func = "radix_sort_Rcpp")  42.5820
+    ##             one.simu(n = n, type = "integer", func = "heap_sort") 324.8612
+    ##        one.simu(n = n, type = "integer", func = "heap_sort_Rcpp")  42.4347
+    ##       one.simu(n = n, type = "integer", func = "quick_sort_opti") 105.9907
+    ##  one.simu(n = n, type = "integer", func = "quick_sort_Rcpp_opti")  53.3339
     ##        lq      mean    median       uq      max neval  cld
-    ##   89.1339  98.08377  99.06115 108.5081 120.7748    50  b  
-    ##   67.0685  75.66781  76.41525  82.5333 101.4021    50 a   
-    ##  554.6774 609.75589 606.51230 673.3824 741.9699    50    d
-    ##   67.0215  75.48068  76.18530  82.8029 103.3775    50 a   
-    ##  155.8283 173.78568 176.50425 187.4414 270.5120    50   c 
-    ##   80.4393  89.73797  91.63625  96.0985 120.2480    50 ab
+    ##   58.9338  60.90556  60.69285  62.8434  64.9390    50  b  
+    ##   44.2549  45.26601  45.31865  46.3666  49.9435    50 a   
+    ##  342.2047 359.98728 354.32815 379.6857 387.7192    50    d
+    ##   44.1024  45.14940  45.08970  46.0160  48.4291    50 a   
+    ##  110.9343 112.75485 112.49230 115.0377 116.9761    50   c 
+    ##   54.9311  56.46307  56.48750  57.8106  60.9134    50  b
 
 On fait maintenant un second essai avec une plus grande taille pour le
 vecteur à trier (\(n = 10^5\) ici). On remarque le radix sort est
-meilleur que le heap sort. Ce qui est cohérent avec les résultats
-précédents (partie `Simulations dans le "cas moyen"`).
+généralement meilleur que le heap sort. Ce qui est cohérent avec les
+résultats précédents (partie `Simulations avec des entiers naturels`).
 
 ``` r
-n <- 10^5
+n <- 10^6
 res <- microbenchmark(one.simu(n = n, type = "integer", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "integer", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "integer", func = "quick_sort_Rcpp_opti"),
@@ -993,14 +1039,14 @@ print(res)
 ```
 
     ## Unit: milliseconds
-    ##                                                              expr      min
-    ##       one.simu(n = n, type = "integer", func = "radix_sort_Rcpp") 174.8760
-    ##        one.simu(n = n, type = "integer", func = "heap_sort_Rcpp") 164.1797
-    ##  one.simu(n = n, type = "integer", func = "quick_sort_Rcpp_opti") 293.7552
-    ##        lq     mean   median       uq      max neval cld
-    ##  195.6146 209.4688 210.9173 222.2166 250.3757    50  a 
-    ##  207.1735 214.2009 216.4449 225.0440 236.7306    50  a 
-    ##  326.8506 351.9278 354.5542 366.2660 563.9717    50   b
+    ##                                                              expr       min
+    ##       one.simu(n = n, type = "integer", func = "radix_sort_Rcpp")  295.7054
+    ##        one.simu(n = n, type = "integer", func = "heap_sort_Rcpp")  347.2638
+    ##  one.simu(n = n, type = "integer", func = "quick_sort_Rcpp_opti") 1333.2258
+    ##         lq      mean    median        uq       max neval cld
+    ##   328.0758  351.8276  347.6630  366.8389  503.3671    50  a 
+    ##   358.7263  379.5139  367.8005  395.4613  496.4289    50  a 
+    ##  1386.8357 1484.9512 1443.7107 1569.6211 1792.1263    50   b
 
 ### Comparaisons avec des entiers relatifs
 
@@ -1038,13 +1084,13 @@ print(res)
     ##        one.simu(n = n, type = "negative integer", func = "heap_sort_Rcpp")
     ##       one.simu(n = n, type = "negative integer", func = "quick_sort_opti")
     ##  one.simu(n = n, type = "negative integer", func = "quick_sort_Rcpp_opti")
-    ##       min        lq      mean    median        uq       max neval cld
-    ##  153.1488  180.9789  200.2096  201.9688  216.0059  244.6172    50 a  
-    ##  151.4792  171.3482  181.6123  184.4282  192.0370  210.1824    50 a  
-    ##  925.2472 1291.4853 1440.4343 1420.0264 1547.8058 1958.3405    50   c
-    ##  132.9915  170.7211  182.8835  184.6642  193.0370  223.2896    50 a  
-    ##  204.7313  270.1321  287.7749  290.9084  309.9346  338.9672    50  b 
-    ##  138.1985  185.0857  198.3754  203.0453  213.1796  237.9647    50 a
+    ##       min       lq     mean   median       uq      max neval  cld
+    ##  117.1194 127.0922 131.8490 130.4803 135.3539 167.9405    50  b  
+    ##  106.5334 109.9573 113.8311 113.4015 116.6669 133.9551    50 a   
+    ##  749.9241 773.9381 826.5897 800.4013 876.0458 987.8945    50    d
+    ##  101.7713 110.9379 115.7473 115.1549 118.3986 147.8805    50 a   
+    ##  182.1929 188.0629 194.4729 191.9959 196.0266 240.6074    50   c 
+    ##  109.4742 122.1821 127.1871 125.2964 128.1488 178.8530    50 ab
 
 On fait maintenant un second essai avec une plus grande taille pour le
 vecteur à trier (\(n = 10^6\) ici). On remarque le radix sort est
@@ -1052,7 +1098,7 @@ meilleur que le heap sort. Ce qui est cohérent avec les résultats
 précédents (partie `Simulations dans le "cas moyen"`).
 
 ``` r
-n <- 10^5
+n <- 10^6
 res <- microbenchmark(one.simu(n = n, type = "negative integer", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "negative integer", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "negative integer", func = "quick_sort_Rcpp_opti"),
@@ -1073,10 +1119,10 @@ print(res)
     ##       one.simu(n = n, type = "negative integer", func = "radix_sort_Rcpp")
     ##        one.simu(n = n, type = "negative integer", func = "heap_sort_Rcpp")
     ##  one.simu(n = n, type = "negative integer", func = "quick_sort_Rcpp_opti")
-    ##       min       lq     mean   median       uq      max neval cld
-    ##  182.0886 214.0880 230.6447 235.4717 247.6776 267.7366    50  a 
-    ##  170.0258 221.7706 232.4186 232.8476 245.8142 278.7264    50  a 
-    ##  306.0753 354.2966 370.1601 374.2828 384.7900 425.6265    50   b
+    ##        min        lq      mean    median        uq       max neval cld
+    ##   354.0810  383.0839  401.0044  397.5770  416.8441  463.5452    50 a  
+    ##   398.7679  424.2667  443.6874  431.2051  452.4340  538.9253    50  b 
+    ##  1458.4845 1533.2033 1610.5431 1587.5991 1693.6339 1865.3700    50   c
 
 ### Comparaisons avec des nombres décimaux non signés
 
@@ -1107,20 +1153,20 @@ print(res)
 ```
 
     ## Unit: milliseconds
-    ##                                                                 expr       min
-    ##       one.simu(n = n, type = "decimal", func = "radix_sort_decimal")  222.5454
-    ##  one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal")  129.4752
-    ##                one.simu(n = n, type = "decimal", func = "heap_sort") 1030.7057
-    ##           one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp")  121.9967
-    ##          one.simu(n = n, type = "decimal", func = "quick_sort_opti")  242.0972
-    ##     one.simu(n = n, type = "decimal", func = "quick_sort_Rcpp_opti")  149.8414
-    ##         lq      mean    median        uq       max neval cld
-    ##   272.8628  292.5287  294.0770  310.1938  354.6057    50  b 
-    ##   174.3409  189.2358  192.0250  203.4713  235.9207    50 a  
-    ##  1231.3263 1318.9461 1299.8994 1408.8852 1525.7368    50   c
-    ##   175.3499  186.9781  185.0748  198.6041  230.7984    50 a  
-    ##   287.5023  307.9071  310.0124  331.2976  366.9035    50  b 
-    ##   181.2848  199.7617  203.6866  218.2829  255.7121    50 a
+    ##                                                                 expr      min
+    ##       one.simu(n = n, type = "decimal", func = "radix_sort_decimal") 160.8539
+    ##  one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal") 105.8826
+    ##                one.simu(n = n, type = "decimal", func = "heap_sort") 728.4547
+    ##           one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp")  97.9825
+    ##          one.simu(n = n, type = "decimal", func = "quick_sort_opti") 185.8909
+    ##     one.simu(n = n, type = "decimal", func = "quick_sort_Rcpp_opti") 113.6729
+    ##        lq     mean   median       uq       max neval  cld
+    ##  173.0623 180.9183 177.5458 187.9372  210.4502    50  b  
+    ##  116.2062 123.1505 120.5910 130.8956  150.4085    50 a   
+    ##  774.6738 862.0426 858.2236 917.1734 1143.8012    50    d
+    ##  113.0561 120.3055 118.6326 124.7193  158.7613    50 a   
+    ##  204.1582 214.7047 209.0122 225.1712  327.9013    50   c 
+    ##  124.5937 130.6454 128.2396 134.1173  170.5834    50 a
 
 On fait maintenant un second essai avec une plus grande taille pour le
 vecteur à trier (\(n = 10^5\) ici). On remarque le radix sort est
@@ -1128,7 +1174,7 @@ meilleur que le heap sort. Ce qui est cohérent avec les résultats
 précédents (partie `Simulations dans le "cas moyen"`).
 
 ``` r
-n <- 10^5
+n <- 10^6
 res <- microbenchmark(one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal"),
                       one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "decimal", func = "quick_sort_Rcpp_opti"),
@@ -1145,14 +1191,14 @@ print(res)
 ```
 
     ## Unit: milliseconds
-    ##                                                                 expr      min
-    ##  one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal") 227.3377
-    ##           one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp") 171.0036
-    ##     one.simu(n = n, type = "decimal", func = "quick_sort_Rcpp_opti") 297.2844
-    ##        lq     mean   median       uq      max neval cld
-    ##  253.6646 273.9187 273.4871 286.8456 350.8970    50  b 
-    ##  205.0187 220.0178 222.3657 235.7292 268.7632    50 a  
-    ##  348.0885 380.3193 386.4045 407.1961 447.0710    50   c
+    ##                                                                 expr       min
+    ##  one.simu(n = n, type = "decimal", func = "radix_sort_Rcpp_decimal")  736.6285
+    ##           one.simu(n = n, type = "decimal", func = "heap_sort_Rcpp")  382.6517
+    ##     one.simu(n = n, type = "decimal", func = "quick_sort_Rcpp_opti") 1543.8706
+    ##         lq      mean    median        uq      max neval cld
+    ##   763.1215  818.6955  808.0567  854.9304 1062.278    50  b 
+    ##   398.7914  421.5104  407.6708  441.1656  545.667    50 a  
+    ##  1608.5658 1697.9270 1705.8144 1786.7387 1924.986    50   c
 
 ### Comparaisons avec des nombres décimaux signés
 
@@ -1190,13 +1236,13 @@ print(res)
     ##           one.simu(n = n, type = "negative decimal", func = "heap_sort_Rcpp")
     ##          one.simu(n = n, type = "negative decimal", func = "quick_sort_opti")
     ##     one.simu(n = n, type = "negative decimal", func = "quick_sort_Rcpp_opti")
-    ##       min        lq      mean    median        uq       max neval  cld
-    ##  202.1859  251.3363  272.3684  277.1983  293.4915  330.8813    50  b  
-    ##  147.5217  179.3554  194.3643  192.3014  216.8387  239.4120    50 a   
-    ##  902.3456 1247.6738 1341.1356 1335.8655 1435.9900 1601.5974    50    d
-    ##  125.0976  170.3040  184.9287  190.6345  197.8581  231.8206    50 a   
-    ##  241.2469  288.0331  310.7440  311.7309  330.8225  377.5157    50   c 
-    ##  129.0584  174.0806  194.3866  199.3721  212.0111  247.8416    50 a
+    ##       min       lq     mean   median       uq       max neval  cld
+    ##  165.8319 176.6023 182.4171 179.2930 184.4494  232.4755    50  b  
+    ##  113.5732 118.8314 122.6243 121.4289 123.6585  141.6951    50 a   
+    ##  767.6887 787.3566 846.9806 822.7287 899.0582 1087.7955    50    d
+    ##  108.8743 112.9806 116.4506 115.2638 117.7302  145.6037    50 a   
+    ##  197.2494 203.2877 209.7110 208.3228 211.5225  265.4281    50   c 
+    ##  113.4209 124.7668 128.1870 126.2466 130.3059  166.8588    50 a
 
 On fait maintenant un second essai avec une plus grande taille pour le
 vecteur à trier (\(n = 10^6\) ici). On remarque le radix sort est
@@ -1204,7 +1250,7 @@ meilleur que le heap sort. Ce qui est cohérent avec les résultats
 précédents (partie `Simulations dans le "cas moyen"`).
 
 ``` r
-n <- 10^5
+n <- 10^6
 res <- microbenchmark(one.simu(n = n, type = "negative decimal", func = "radix_sort_Rcpp_decimal"),
                       one.simu(n = n, type = "negative decimal", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "negative decimal", func = "quick_sort_Rcpp_opti"),
@@ -1225,10 +1271,10 @@ print(res)
     ##  one.simu(n = n, type = "negative decimal", func = "radix_sort_Rcpp_decimal")
     ##           one.simu(n = n, type = "negative decimal", func = "heap_sort_Rcpp")
     ##     one.simu(n = n, type = "negative decimal", func = "quick_sort_Rcpp_opti")
-    ##       min       lq     mean   median       uq      max neval cld
-    ##  197.1839 261.0563 278.2735 277.8525 300.1547 329.5169    50  b 
-    ##  166.5159 209.7259 228.8680 233.4707 247.5985 272.1159    50 a  
-    ##  313.0838 353.9893 380.0220 384.1799 402.8931 447.9841    50   c
+    ##        min        lq      mean    median        uq       max neval cld
+    ##   784.9144  798.6799  821.8472  810.2356  829.0541  954.4792    50  b 
+    ##   428.3096  438.5616  445.1735  445.9376  452.6059  474.3096    50 a  
+    ##  1578.5373 1628.9567 1663.3625 1654.7746 1683.1321 1892.3475    50   c
 
 ### Comparaison dans le cas où le vecteur est trié dans l’ordre décroissant
 
@@ -1262,19 +1308,19 @@ print(res)
 
     ## Unit: milliseconds
     ##                                                              expr      min
-    ##            one.simu(n = n, type = "reverse", func = "radix_sort") 157.1377
-    ##       one.simu(n = n, type = "reverse", func = "radix_sort_Rcpp") 145.7311
-    ##             one.simu(n = n, type = "reverse", func = "heap_sort") 498.7328
-    ##        one.simu(n = n, type = "reverse", func = "heap_sort_Rcpp") 121.3139
-    ##       one.simu(n = n, type = "reverse", func = "quick_sort_opti") 279.6249
-    ##  one.simu(n = n, type = "reverse", func = "quick_sort_Rcpp_opti") 141.0412
-    ##        lq     mean   median       uq      max neval  cld
-    ##  199.0524 211.1041 214.7503 226.3096 248.5524    50  b  
-    ##  178.7636 192.9728 193.6334 208.6592 243.2625    50 ab  
-    ##  628.6976 709.6405 697.6038 786.7755 989.8986    50    d
-    ##  170.5787 181.9596 183.6660 191.6545 222.5356    50 a   
-    ##  302.3623 327.7444 330.4542 344.0089 385.0575    50   c 
-    ##  183.1387 199.4376 201.8496 215.5214 250.0213    50 ab
+    ##            one.simu(n = n, type = "reverse", func = "radix_sort") 124.6399
+    ##       one.simu(n = n, type = "reverse", func = "radix_sort_Rcpp") 107.7111
+    ##             one.simu(n = n, type = "reverse", func = "heap_sort") 384.4660
+    ##        one.simu(n = n, type = "reverse", func = "heap_sort_Rcpp") 101.4865
+    ##       one.simu(n = n, type = "reverse", func = "quick_sort_opti") 181.1659
+    ##  one.simu(n = n, type = "reverse", func = "quick_sort_Rcpp_opti") 119.3002
+    ##        lq     mean   median       uq      max neval cld
+    ##  127.9601 160.7981 155.2498 200.3276 224.4406    50 a  
+    ##  112.9227 137.2468 127.2515 159.2532 199.1906    50 a  
+    ##  416.9649 502.5465 466.1965 581.2374 863.1482    50   c
+    ##  111.1028 140.6380 130.6613 187.2043 201.1798    50 a  
+    ##  204.1582 241.1138 209.1543 256.3784 342.0691    50  b 
+    ##  122.4679 146.4509 128.6755 151.6465 227.3317    50 a
 
 On fait maintenant un second essai avec une plus grande taille pour le
 vecteur à trier (\(n = 10^6\) ici). On remarque le radix sort est
@@ -1283,7 +1329,7 @@ meilleur que le radix sort seulement sur de plus petites tailles de
 données.
 
 ``` r
-n <- 10^5
+n <- 10^6
 res <- microbenchmark(one.simu(n = n, type = "reverse", func = "radix_sort_Rcpp"),
                       one.simu(n = n, type = "reverse", func = "heap_sort_Rcpp"),
                       one.simu(n = n, type = "reverse", func = "quick_sort_Rcpp_opti"),
@@ -1300,14 +1346,14 @@ print(res)
 ```
 
     ## Unit: milliseconds
-    ##                                                              expr      min
-    ##       one.simu(n = n, type = "reverse", func = "radix_sort_Rcpp") 143.7417
-    ##        one.simu(n = n, type = "reverse", func = "heap_sort_Rcpp") 130.5852
-    ##  one.simu(n = n, type = "reverse", func = "quick_sort_Rcpp_opti") 267.9685
-    ##        lq     mean   median       uq      max neval cld
-    ##  170.7320 190.0432 196.4853 208.2798 234.0263    50  a 
-    ##  169.2514 183.5685 187.3186 196.3643 225.1270    50  a 
-    ##  317.7657 328.2349 332.6553 341.5765 394.1071    50   b
+    ##                                                              expr       min
+    ##       one.simu(n = n, type = "reverse", func = "radix_sort_Rcpp")  296.1131
+    ##        one.simu(n = n, type = "reverse", func = "heap_sort_Rcpp")  231.3692
+    ##  one.simu(n = n, type = "reverse", func = "quick_sort_Rcpp_opti") 1354.1876
+    ##         lq      mean    median        uq       max neval cld
+    ##   301.4779  318.4567  308.7625  316.5942  439.4542    50  b 
+    ##   239.8792  248.3300  245.8471  253.5788  301.7180    50 a  
+    ##  1414.3733 1486.1782 1467.2424 1543.8688 1747.6321    50   c
 
 <a id="complexity"></a>
 
@@ -1345,8 +1391,16 @@ plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in secon
 ![](README_files/figure-gfm/unnamed-chunk-56-1.png)<!-- -->
 
 ``` r
-#lm(res ~ vector_n)
+lm(res ~ vector_n)
 ```
+
+    ## 
+    ## Call:
+    ## lm(formula = res ~ vector_n)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     vector_n  
+    ##   4.660e-03    1.617e-06
 
 ### Radix sort en Rcpp
 
@@ -1374,10 +1428,19 @@ plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in secon
 
 ![](README_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
 
-### Radix sort en R (version nombres décimaux)
+``` r
+lm(res ~ vector_n)
+```
 
-En Rcpp, on constate qu’on gagne énormément de temps par rapport au code
-R. Cependant, on n’a plus du tout la tendance “linéaire” de la courbe.
+    ## 
+    ## Call:
+    ## lm(formula = res ~ vector_n)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     vector_n  
+    ##   4.933e-04    1.362e-07
+
+### Radix sort en R (version nombres décimaux)
 
 ``` r
 nbSimus <- 10
@@ -1398,9 +1461,21 @@ res <- rowMeans(res_radix_rcpp[,-1])
 plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
 
-### Radix sort en R (version nombres décimaux)
+``` r
+lm(res ~ vector_n)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = res ~ vector_n)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     vector_n  
+    ##   2.167e-03    3.182e-06
+
+### Radix sort en Rcpp (version nombres décimaux)
 
 En Rcpp, on constate qu’on gagne énormément de temps par rapport au code
 R. Cependant, on n’a plus du tout la tendance “linéaire” de la courbe.
@@ -1424,7 +1499,19 @@ res <- rowMeans(res_radix_rcpp[,-1])
 plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-60-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
+
+``` r
+lm(res ~ vector_n)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = res ~ vector_n)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     vector_n  
+    ##   5.667e-04    1.787e-07
 
 ### Heap sort en Rcpp
 
@@ -1452,7 +1539,19 @@ res <- rowMeans(res_heap_sort_rcpp[,-1])
 plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-64-1.png)<!-- -->
+
+``` r
+lm(res ~ vector_n)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = res ~ vector_n)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     vector_n  
+    ##  -5.933e-04    1.881e-07
 
 Plus le nombre d’éléments à stocker est grand, plus la différence entre
 le heap sort et le radix sort se fait grande.
@@ -1483,4 +1582,16 @@ res <- rowMeans(res_quick_sort_rcpp[,-1])
 plot(vector_n, res, type = 'b', xlab = "data length", ylab = "mean time in seconds")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-62-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-66-1.png)<!-- -->
+
+``` r
+lm(res ~ vector_n)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = res ~ vector_n)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     vector_n  
+    ##    2.18e-03     1.14e-06
